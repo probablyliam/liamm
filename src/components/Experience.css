@@ -1,0 +1,127 @@
+.experience {
+  padding: 3rem 2rem;
+  background: #0a0a14;
+}
+
+.experience-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.experience h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0 0 2rem 0;
+  color: #fff;
+}
+
+.experience-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.experience-item {
+  border-left: 2px solid rgba(160, 160, 255, 0.3);
+  padding-left: 2rem;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.experience-item::before {
+  content: '';
+  position: absolute;
+  left: -7px;
+  top: 0;
+  width: 12px;
+  height: 12px;
+  background: linear-gradient(135deg, #a0a0ff 0%, #fff 100%);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.experience-item:hover {
+  border-left-color: rgba(160, 160, 255, 0.6);
+}
+
+.experience-item:hover::before {
+  box-shadow: 0 0 20px rgba(160, 160, 255, 0.5);
+  transform: scale(1.2);
+}
+
+.experience-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+
+.experience-title-block h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0.3rem 0;
+  color: #fff;
+}
+
+.experience-title-block .company {
+  font-size: 0.9rem;
+  color: #a0a0ff;
+  margin: 0;
+  font-weight: 500;
+}
+
+.period {
+  font-size: 0.85rem;
+  color: #808090;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.experience-meta {
+  margin-top: 0.25rem;
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.experience-meta span {
+  font-size: 0.9rem;
+  color: #c0c0d8;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .experience {
+    padding: 2.5rem 1.5rem;
+  }
+
+  .experience h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .experience-item {
+    padding-left: 1.5rem;
+  }
+
+  .experience-item::before {
+    left: -6px;
+    width: 10px;
+    height: 10px;
+  }
+
+  .experience-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .period {
+    white-space: normal;
+  }
+
+  .experience-meta span {
+    font-size: 0.85rem;
+  }
+}

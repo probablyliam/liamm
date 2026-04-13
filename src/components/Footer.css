@@ -1,0 +1,18 @@
+.footer {
+  padding: 1.5rem 2rem;
+  background: #0a0a14;
+  border-top: 1px solid rgba(160, 160, 255, 0.1);
+}
+
+.copyright {
+  text-align: center;
+  color: #606080;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 1.25rem 1.5rem;
+  }
+}

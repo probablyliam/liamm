@@ -1,0 +1,634 @@
+/* ===========================================================================
+   Project detail — built around fast scanning. The page answers, in order:
+   what is this, what makes it interesting, how does it play, how was it built,
+   what did I learn. No decorative sections; every block earns its place.
+   =========================================================================== */
+
+.detail-back {
+  margin-bottom: 1rem;
+  font-size: 0.88rem;
+}
+
+.detail-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 0.85rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 2px solid var(--ink);
+}
+
+.detail-titleblock h1 {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  margin-bottom: 0.5rem;
+}
+
+.detail-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.detail-kind,
+.detail-year {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--ink-3);
+}
+
+.detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* --- Shared media frame ------------------------------------------------- */
+.media-frame {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--panel);
+}
+
+.media-frame img,
+.media-frame video {
+  width: 100%;
+  display: block;
+}
+
+.media-video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+}
+
+.media-video iframe,
+.media-video video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: cover;
+}
+
+/* --- Hero: the finished result, shown first ---------------------------- */
+.hero-media {
+  margin: 0 0 1rem;
+}
+
+.hero-media figcaption {
+  margin-top: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--ink-3);
+}
+
+/* The one-sentence "what is this" — the 5-second read. */
+.detail-tagline {
+  font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+  line-height: 1.5;
+  color: var(--ink);
+  max-width: 72ch;
+  margin-bottom: 1.1rem;
+}
+
+/* Three at-a-glance stats — a thin strip, not a row of cards. */
+.detail-stats {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 0 0 1.25rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--panel-alt);
+}
+
+.detail-stats .stat {
+  padding: 0.7rem 0.95rem;
+  border-top: 1px solid var(--border);
+}
+
+.detail-stats .stat:first-child {
+  border-top: 0;
+}
+
+.detail-stats dt {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-3);
+  margin-bottom: 0.2rem;
+}
+
+.detail-stats dd {
+  font-size: 0.92rem;
+  color: var(--ink);
+  line-height: 1.35;
+}
+
+@media (min-width: 680px) {
+  .detail-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .detail-stats .stat {
+    border-top: 0;
+    border-left: 1px solid var(--border);
+  }
+  .detail-stats .stat:first-child {
+    border-left: 0;
+  }
+}
+
+.detail-overview {
+  margin-bottom: 2.75rem;
+}
+
+/* --- Sections ---------------------------------------------------------- */
+.detail-section {
+  margin-bottom: 2.5rem;
+}
+
+.detail-h2 {
+  font-size: 1.15rem;
+  letter-spacing: 0.01em;
+  padding-bottom: 0.4rem;
+  margin-bottom: 1.1rem;
+  border-bottom: 2px solid var(--ink);
+}
+
+.detail-desc {
+  color: var(--ink-2);
+  max-width: 72ch;
+  line-height: 1.6;
+}
+
+/* --- What makes it interesting: six compact cards ---------------------- */
+.hl-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.6rem;
+}
+
+@media (min-width: 560px) {
+  .hl-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (min-width: 880px) {
+  .hl-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.hl {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.65rem 0.85rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--border-strong);
+  border-radius: var(--radius);
+}
+
+.hl-title {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+
+.hl-detail {
+  font-size: 0.84rem;
+  line-height: 1.4;
+  color: var(--ink-3);
+}
+
+/* --- The three abilities: the centerpiece, three equal columns --------- */
+.abil-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+}
+
+@media (min-width: 720px) {
+  .abil-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.abil {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.abil .media-frame {
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+}
+
+.abil-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 0.8rem 0.85rem;
+}
+
+.abil-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.abil-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  flex: none;
+}
+
+.abil-name {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.abil-kv {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.35rem 0.7rem;
+}
+
+.abil-kv dt {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+  padding-top: 0.1rem;
+}
+
+.abil-kv dd {
+  color: var(--ink-2);
+  font-size: 0.86rem;
+  line-height: 1.4;
+}
+
+/* --- How it was built: compact engineering notes, media beside --------- */
+.build-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.build-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.7rem 1.5rem;
+  padding: 1.1rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.build-row:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+@media (min-width: 720px) {
+  .build-row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    align-items: start;
+  }
+}
+
+.build-title {
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
+}
+
+.build-body {
+  color: var(--ink-2);
+  max-width: 64ch;
+  line-height: 1.55;
+  font-size: 0.92rem;
+}
+
+.build-media {
+  align-self: start;
+}
+
+/* --- What I learned: a few short bullets ------------------------------- */
+.learn-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 72ch;
+}
+
+.learn-list li {
+  position: relative;
+  padding-left: 1.1rem;
+  color: var(--ink-2);
+  line-height: 1.55;
+}
+
+.learn-list li::before {
+  content: "–";
+  position: absolute;
+  left: 0;
+  color: var(--ink-3);
+}
+
+/* --- Planned media slot (compact, labelled, intentional) --------------- */
+.media-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.9rem 1rem;
+  aspect-ratio: 16 / 9;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--panel-alt);
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 9px,
+    rgba(0, 0, 0, 0.018) 9px,
+    rgba(0, 0, 0, 0.018) 18px
+  );
+}
+
+.media-placeholder-label {
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+/* --- "Details" expander: a clearly tappable control, depth on demand ---- */
+.build-more {
+  margin-top: 0.85rem;
+}
+
+.build-more > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: fit-content;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-2);
+  background: var(--panel-alt);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: 0.32rem 0.65rem;
+  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+
+.build-more > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Chevron points right when closed, rotates down when open. */
+.build-more > summary::before {
+  content: "›";
+  font-size: 1rem;
+  line-height: 1;
+  transition: transform 0.15s ease;
+}
+
+.build-more[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.build-more > summary:hover,
+.build-more > summary:focus-visible,
+.build-more[open] > summary {
+  background: var(--row-hover);
+  border-color: var(--link);
+  color: var(--link-hover);
+}
+
+/* Revealed detail reads as a nested block tied to its toggle. */
+.build-more-body {
+  margin-top: 0.7rem;
+  padding-left: 0.85rem;
+  border-left: 2px solid var(--border-strong);
+}
+
+.build-more-body .build-body + .build-body {
+  margin-top: 0.5rem;
+}
+
+/* A build row carrying the architecture diagram goes full width. */
+.build-row-wide {
+  grid-template-columns: 1fr;
+}
+
+/* --- Architecture diagram: built from the actual systems --------------- */
+.arch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 720px;
+  margin: 0.25rem auto 0;
+  padding: 1.1rem 1rem;
+  background: var(--panel-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.arch-stage {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+  text-align: center;
+  padding: 0.5rem 0.85rem;
+  background: var(--panel);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+}
+
+.arch-name {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--ink);
+}
+
+.arch-sub {
+  font-family: var(--mono);
+  font-size: 0.69rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+}
+
+.arch-primary {
+  border-left: 3px solid var(--ink);
+}
+
+.arch-aside {
+  border-style: dashed;
+  background: var(--panel-alt);
+}
+
+.arch-arrow {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--ink-3);
+  padding: 0.3rem 0;
+}
+
+.arch-gaterow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.arch-gate {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.arch-gatelabel {
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-3);
+}
+
+.arch-split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0 1.5rem;
+  width: 100%;
+}
+
+.arch-branch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 540px) {
+  .arch-split {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+/* --- Click-to-expand: hover affordance over an ambient clip ------------ */
+.clip-expand {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.clip-expand-icon {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  margin: 0.5rem;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius);
+  opacity: 0.55;
+  transition: opacity 0.12s ease, background 0.12s ease;
+}
+
+.clip-expand:hover .clip-expand-icon,
+.clip-expand:focus-visible .clip-expand-icon {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.72);
+}
+
+.clip-expand-icon svg {
+  display: block;
+}
+
+/* --- Lightbox: the clip at actual size, with native controls ----------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 4vw, 3rem);
+  background: rgba(0, 0, 0, 0.85);
+  animation: lightbox-fade 0.14s ease-out;
+}
+
+.lightbox-inner {
+  width: min(1100px, 100%);
+  animation: lightbox-pop 0.14s ease-out;
+}
+
+@keyframes lightbox-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes lightbox-pop {
+  from { opacity: 0; transform: scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox,
+  .lightbox-inner {
+    animation: none;
+  }
+}
+
+.lightbox-inner video {
+  width: 100%;
+  height: auto;
+  max-height: 85vh;
+  display: block;
+  background: #000;
+  border-radius: var(--radius);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  font-size: 1.7rem;
+  line-height: 1;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.detail-missing h1 {
+  margin-bottom: 0.75rem;
+}

@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# Raw media masters — kept local only. The 4K source clips (hundreds of MB)
+# and personal notes stay out of git; only the compressed assets under
+# /public (what Vercel actually serves) are committed.
+/TrialContent/
+/ImperialContent/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

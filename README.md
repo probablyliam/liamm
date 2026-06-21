@@ -1,108 +1,79 @@
-# Personal Portfolio Site
+# Portfolio — Liam Maiorino
 
-A sleek, minimal React portfolio website with easy configuration. Edit your portfolio information in one place and the site updates automatically.
+Personal portfolio site. React + Vite, deployed on Vercel (auto-deploys on push to `main`).
+All content lives in **`src/config.js`** — edit that one file to update the site.
 
-## Features
-
-- ✨ Clean, professional design (no AI-generated look)
-- 📱 Fully responsive mobile-first design
-- 🌓 Light/dark mode support
-- ⚙️ Simple configuration system
-- 🚀 Built with Vite + React for fast development
-
-## Getting Started
-
-### 1. Configure Your Portfolio
-
-Edit `src/config.js` with your personal information:
-
-```js
-export const portfolioConfig = {
-  name: "Your Full Name",
-  title: "Your Title",
-  location: "Toronto, ON, Canada",
-  
-  social: {
-    linkedin: "https://linkedin.com/in/yourprofile",
-    github: "https://github.com/yourprofile",
-    email: "your.email@example.com",
-  },
-
-  about: "Your about section text",
-
-  projects: [
-    {
-      id: 1,
-      title: "Project Name",
-      description: "Project description",
-      url: "https://project-url.com",
-      tags: ["React", "TypeScript"],
-    },
-  ],
-
-  skills: ["React", "JavaScript", "CSS", "Node.js"],
-};
-```
-
-### 2. Run Locally
+## Run locally
 
 ```bash
-npm run dev
+npm install
+npm run dev        # http://localhost:5173
+npm run build      # production build -> dist/
+npm run preview    # preview the production build
 ```
 
-Visit `http://localhost:5173` to see your portfolio.
-
-### 3. Build for Production
-
-```bash
-npm run build
-```
-
-### Project Structure
+## Structure
 
 ```
 src/
-├── config.js                 # Edit your portfolio info here
-├── components/
-│   ├── Hero.jsx             # Header section
-│   ├── Projects.jsx         # Project showcase
-│   ├── Experience.jsx       # Experience timeline
-│   ├── Skills.jsx           # Skills list
-│   └── Footer.jsx           # Footer
-├── App.jsx                  # Main app component
-├── index.css                # Global styles
-└── App.css                  # App container styles
+├── config.js              # ← all content lives here
+├── pages/
+│   ├── Home.jsx           # the single-page sections
+│   └── ProjectDetail.jsx  # /projects/<slug> detail page
+├── components/            # Nav, Hero, Projects, Experience, Skills, About, Footer
+├── index.css             # design tokens (colors, type, blueprint grid)
+└── App.jsx               # routing
 ```
+
+## Adding a project
+
+Each project in `config.js` gets its own shareable page at `/projects/<slug>`.
+
+```js
+{
+  id: 3,
+  slug: "my-project",                 // becomes /projects/my-project
+  title: "My Project",
+  blurb: "One line shown on the card.",
+  year: "2026",
+  status: "Live",                     // or "In development", etc.
+  cover: "/my-cover.jpg",             // card image (put file in /public). "" = grid placeholder
+  description: "Longer paragraph for the detail page.",
+  features: ["Thing one", "Thing two"],
+  tech: ["Unity", "C#"],
+  media: [
+    { type: "youtube", id: "VIDEO_ID" },           // YouTube embed
+    { type: "video",   src: "/clip.mp4" },         // self-hosted file in /public
+    { type: "image",   src: "/shot.png", alt: "…" } // screenshot/gif in /public
+  ],
+  links: {                            // any of these; omit to hide the button
+    live: "https://…",
+    download: "https://itch.io/…",
+    devlog: "https://…",
+    github: "https://github.com/…"
+  }
+}
+```
+
+**Showing off the Unity game:** drop screenshots/gifs in `/public`, add them to `media`,
+add a YouTube gameplay video with `{ type: "youtube", id: "…" }`, and link a build via
+`links.download`. No code changes needed.
+
+## Other content
+
+- **Experience** — minimal by default. Add a one-line `summary` to any role to show it
+  (keep it generic; no internal tool/system names).
+- **Skills** — grouped lists (`{ group, items }`).
+- **Résumé** — set `social.resume` to a PDF path in `/public` to show a Résumé link.
+
+## Theming
+
+Colors, fonts, and the blueprint grid are CSS variables in `src/index.css` (`:root`).
 
 ## Deployment
 
-The site is optimized for deployment on Vercel, Netlify, or any static host.
-
-### Deploy to Vercel
-
-1. Push to GitHub
-2. Connect repo to Vercel
-3. Deploy with one click
-
-Alternatively:
+Push to `main` → Vercel auto-deploys. `vercel.json` rewrites all routes to `index.html`
+so deep links like `/projects/imperial-lineage` work on refresh.
 ```bash
-npm run build
-# Deploy the dist/ folder
+npm run build   # then deploy dist/ to any static host
 ```
-
-## Customization
-
-- Colors and spacing are in the CSS files
-- For dark mode, modify the CSS variables in `src/index.css`
-- Each component has its own CSS file for easy customization
-
-## Tech Stack
-
-- **React 19** - UI library
-- **Vite** - Build tool
-- **CSS 3** - Styling with custom properties
-- **JavaScript ES6+** - Modern JavaScript
-
----
-
-**Start by editing `src/config.js` to personalize your portfolio!**

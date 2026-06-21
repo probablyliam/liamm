@@ -1,180 +1,197 @@
-.projects {
-  padding: 3rem 2rem;
-  background: #0a0a14;
-}
-
-.projects-container {
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.projects h2 {
-  font-size: 1.6rem;
-  font-weight: 700;
-  margin: 0 0 1.8rem 0;
-  color: #fff;
-  letter-spacing: -0.01em;
-}
-
-.projects-grid {
+.pc-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2rem;
+  grid-template-columns: 1fr;
+  gap: var(--gap);
 }
 
-.project-card-link {
-  text-decoration: none;
-  color: inherit;
-}
-
-.project-card {
+.pc {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-  border: 1px solid rgba(160, 160, 255, 0.2);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: transform 0.58s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease, border-color 0.2s ease;
-  transform-style: preserve-3d;
-  will-change: transform;
-  cursor: pointer;
-  position: relative;
-}
-
-.project-card.hovering {
-  transition: transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s ease, border-color 0.2s ease;
-}
-
-.project-card:hover {
-  border-color: rgba(160, 160, 255, 0.35);
-  box-shadow: 0 10px 20px rgba(160, 160, 255, 0.045);
-}
-
-.project-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.22s ease;
-  background: radial-gradient(
-    500px circle at var(--glare-x, 50%) var(--glare-y, 50%),
-    rgba(255, 255, 255, 0.055) 0%,
-    rgba(160, 160, 255, 0.02) 22%,
-    rgba(160, 160, 255, 0) 50%
-  );
-}
-
-.project-card.hovering::before {
-  opacity: 1;
-}
-
-.project-image {
-  position: relative;
-  width: 100%;
-  height: 200px;
   overflow: hidden;
 }
 
-.project-image img {
+.pc:hover {
+  border-color: var(--border-strong);
+}
+
+/* --- Media ------------------------------------------------------------- */
+.pc-media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  background: var(--panel-alt);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.pc-poster,
+.pc-preview {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
-  transition: transform 0.4s ease;
 }
 
-.project-card:hover .project-image img {
-  transform: scale(1.03);
-}
-
-.image-overlay {
+.pc-preview {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 0%, rgba(15, 15, 30, 0.4) 100%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
 }
 
-.project-content {
-  padding: 1.8rem;
-  flex-grow: 1;
+.pc-preview.is-visible {
+  opacity: 1;
+}
+
+.pc-noimg {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--ink-3);
+  background:
+    repeating-linear-gradient(
+      45deg,
+      var(--panel-alt),
+      var(--panel-alt) 10px,
+      #efeff1 10px,
+      #efeff1 20px
+    );
+}
+
+/* --- Body -------------------------------------------------------------- */
+.pc-body {
   display: flex;
   flex-direction: column;
+  gap: 0.55rem;
+  padding: 0.85rem 1rem 1rem;
+}
+
+.pc-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.pc-title {
+  font-size: 1.1rem;
+  line-height: 1.2;
+}
+
+.pc-title a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.pc-title a:hover {
+  color: var(--link);
+  text-decoration: underline;
+}
+
+.pc-headmeta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 0 0 auto;
+}
+
+.pc-year {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--ink-3);
+}
+
+.pc-kind {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--ink-3);
+  margin-top: -0.2rem;
+}
+
+.pc-summary {
+  color: var(--ink-2);
+}
+
+/* Spec rows */
+.pc-spec {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 0.35rem 0.85rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.pc-spec dt {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--ink-3);
+  padding-top: 0.1rem;
+}
+
+.pc-spec dd {
+  font-size: 0.9rem;
+  color: var(--ink-2);
+}
+
+.pc-built {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.pc-built li {
   position: relative;
+  padding-left: 1rem;
 }
 
-.project-card h3 {
-  font-size: 1.3rem;
-  font-weight: 700;
-  margin: 0 0 0.8rem 0;
-  color: #fff;
+.pc-built li::before {
+  content: "–";
+  position: absolute;
+  left: 0;
+  color: var(--ink-3);
 }
 
-.project-card p {
-  font-size: 0.95rem;
-  color: #c0c0d8;
-  margin: 0 0 1.2rem 0;
-  flex-grow: 1;
-  line-height: 1.5;
+/* Both cards: equal full width, media beside the body on wide screens */
+@media (min-width: 720px) {
+  .pc {
+    flex-direction: row;
+  }
+  .pc .pc-media {
+    flex: 0 0 46%;
+    aspect-ratio: auto;
+    border-bottom: none;
+    border-right: 1px solid var(--border);
+  }
+  .pc .pc-body {
+    flex: 1 1 auto;
+    padding: 1.1rem 1.25rem;
+  }
 }
 
-.project-tags {
+.pc-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-bottom: 1rem;
+  gap: 0.45rem;
+  margin-top: 0.35rem;
 }
 
-.tag {
-  font-size: 0.8rem;
-  padding: 0.4rem 0.9rem;
-  background: rgba(160, 160, 255, 0.1);
-  border: 1px solid rgba(160, 160, 255, 0.2);
-  border-radius: 20px;
-  color: #a0a0ff;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.project-card:hover .tag {
-  background: rgba(160, 160, 255, 0.2);
-  border-color: rgba(160, 160, 255, 0.4);
-}
-
-.project-arrow {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #a0a0ff;
-  opacity: 0;
-  transition: all 0.3s ease;
-  transform: translateX(-5px);
-}
-
-.project-card:hover .project-arrow {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-@media (max-width: 768px) {
-  .projects {
-    padding: 3rem 1.5rem;
-  }
-
-  .projects h2 {
-    font-size: 1.5rem;
-    margin-bottom: 2rem;
-  }
-
-  .projects-grid {
+@media (max-width: 480px) {
+  .pc-spec {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 0.1rem;
   }
-
-  .project-card {
-    transform: none !important;
+  .pc-spec dd {
+    margin-bottom: 0.45rem;
   }
+}
 
-  .project-image {
-    height: 180px;
+@media (prefers-reduced-motion: reduce) {
+  .pc-preview.is-visible {
+    opacity: 0;
   }
 }

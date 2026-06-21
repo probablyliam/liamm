@@ -1,15 +1,9 @@
 .app {
-  width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #0a0a14;
 }
 
-.container {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 2rem;
+.app main {
+  flex: 1;
 }
-

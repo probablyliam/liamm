@@ -51,7 +51,7 @@ export function Intro() {
             </>
           )}
           <dt>Focus</dt>
-          <dd>Backend · APIs · AI-assisted development</dd>
+          <dd>Security · Backend · APIs</dd>
         </dl>
       </div>
     </section>

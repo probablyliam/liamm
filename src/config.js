@@ -115,7 +115,7 @@ export const portfolioConfig = {
       summary:
         "A visual, node-based map of the Roman emperors and how succession actually passed between them.",
       problem:
-        "Roman succession rarely ran father-to-son — emperors adopted heirs, and lines jumped through grandchildren — so the real connections are hard to follow.",
+        "Roman succession rarely ran father to son. Emperors often adopted their heirs, and the line sometimes passed through a grandchild, so the real connections are hard to follow.",
       built: [
         "Modeled every emperor and the exact relationship on each link (born, adopted, or succession).",
         "Rendered the full network as a pannable, zoomable graph you can select and expand.",
@@ -124,7 +124,7 @@ export const portfolioConfig = {
       preview: "/imperial/preview.mp4", // short, muted hover clip
       // The one-sentence "what is this", shown directly under the hero.
       tagline:
-        "A visual, node-based map of Roman imperial succession — who descended from whom, who was adopted, and where the bloodline gave way to politics.",
+        "A visual, node-based map of Roman imperial succession, showing who descended from whom, who was adopted, and where the line passed by adoption instead of birth.",
       showcase: {
         type: "video",
         src: "/imperial/imperial.mp4",
@@ -132,10 +132,10 @@ export const portfolioConfig = {
         caption: "Selecting emperors and expanding their lineage in the live graph.",
       },
       description:
-        "I've always been interested in the Roman empire, and especially the tangled connections between generations — an emperor whose grandchild's child eventually takes the throne, or one who adopts a suitable heir instead of a trueborn son. So I built a node-based view of the whole succession: select anyone to see their birth, death, and reign, and expand the descendants of a single person or the entire imperial line.",
+        "I've always been interested in the Roman empire, and especially the tangled connections between generations. An emperor's grandchild might have a child who eventually takes the throne, or an emperor might adopt a suitable heir instead of a trueborn son. I built a node-based view of the whole succession so I could actually see those threads. You can select anyone to see their birth, death, and reign, and expand the descendants of a single person or the entire imperial line.",
       features: [
         "Select any individual to see their birth, death, and reign",
-        "Expand the descendants of one person — or load the entire imperial lineage",
+        "Expand the descendants of one person, or load the entire imperial lineage",
         "See how each link was made: born to them, adopted, or a succession that skipped the bloodline",
         "Pan, zoom, and explore the full network of emperors",
       ],
@@ -155,10 +155,10 @@ export const portfolioConfig = {
       featured: true,
       // One-line hook for the project card.
       summary:
-        "A playable Unity combat demo exploring third-person control, physics-driven abilities, real-time destruction, stylized VFX, and a complete timed scoring loop.",
+        "A playable Unity combat demo where you play as Gojo and use three physics-driven abilities to tear an arena apart against the clock.",
       // Shown as "Problem" on the detail page — framed as the challenge I set.
       problem:
-        "A from-scratch test of real-time game systems and game feel — physics-driven abilities, destruction, and a full scoring loop — built and tuned end to end in Unity.",
+        "Build real-time game systems and game feel from scratch in Unity, covering physics-driven abilities, destruction, and a full scoring loop, end to end.",
       built: [
         "Three physics-driven abilities (push, pull, delete), each defined as data with its own tunable physics profile.",
         "A central physics service plus a destruction and scoring system with grade-based results.",
@@ -176,106 +176,107 @@ export const portfolioConfig = {
         type: "video",
         src: "/cet/hero.mp4",
         poster: "/cet/hero.jpg",
-        caption: "Gameplay: movement, the three abilities, real-time destruction, and the trial HUD.",
+        caption: "Gameplay preview.",
       },
       // The one-sentence "what is this", shown directly under the hero.
       tagline:
-        "A playable Unity demo inspired by Jujutsu Kaisen: play as Gojo and use three Cursed Techniques — Red to push, Blue to pull, and Purple to delete — to tear an arena apart.",
-      // Three at-a-glance stats, shown as a compact row under the tagline.
-      stats: [
-        { label: "Built", value: "Physics abilities + destruction systems" },
-        { label: "Focus", value: "Game feel + animation + feedback" },
-        { label: "Tools", value: "Unity, Blender, Shader Graph" },
-      ],
+        "A playable Unity demo inspired by Jujutsu Kaisen, where you play as Gojo and use his cursed techniques to push, pull, and erase everything in the arena.",
       // A short overview — the main idea, for anyone who reads on.
       description:
-        "The whole project was about getting the feel of the abilities right — balanced, fun, and cinematic. Most of the time went into the physics systems underneath each technique, so they react to the environment in their own way rather than sharing one generic push. Under the visuals it's really a study in cause and effect: making every cast read clearly and land with weight.",
+        "I wanted to make something that lets you feel like Gojo, using his powerful abilities to throw the environment around, with a fun gameplay loop on top. The core of it was getting the abilities to feel right, getting the look right with the toon shader, and writing custom shaders for each ability so they stay true to the source material while still feeling unique to the game. It also has the parts you would expect from a real game: full movement, full animation, and a custom UI.",
       // "What makes it interesting" — six compact, scannable cards.
       features: [
         { title: "Physics-based destruction", detail: "Objects topple, scatter, and dissolve in real time." },
-        { title: "Three distinct abilities", detail: "Push, pull, and delete — each its own rigidbody behaviour." },
+        { title: "Custom abilities", detail: "Push, pull, and delete, each built as its own physics system." },
         { title: "Live grading system", detail: "A timed run scored from Grade 4 up to Special Grade." },
         { title: "Data-driven architecture", detail: "Abilities are ScriptableObjects, not hard-coded logic." },
         { title: "Custom shaders", detail: "Cel shading and a point-of-impact dissolve effect." },
         { title: "Animation pipeline", detail: "Mixamo locomotion retargeted through Blender into Unity." },
       ],
-      // "The three abilities" — the centerpiece. Three equal columns, each a
-      // short looping clip plus three one-line facts.
+      // "Custom abilities" — the centerpiece. Three equal columns, each a short
+      // looping clip, a colour-coded name, a flavour line, and how it works.
       abilities: [
         {
           name: "Red",
           color: "#c8453d",
           video: "/cet/red.mp4",
           poster: "/cet/red.jpg",
-          purpose: "Push objects away.",
+          blurb: "Divergence of infinity, turned outward into a repelling force.",
           feels: "Heavy shockwave.",
-          detail: "Pushes while you hold it, then multiplies the force on release into a shockwave.",
+          detail: "It pushes gently while you hold it, then jumps to full force on release.",
         },
         {
           name: "Blue",
           color: "#3667d6",
           video: "/cet/blue.mp4",
           poster: "/cet/blue.jpg",
-          purpose: "Pull objects inward.",
+          blurb: "Convergence of infinity. It collapses space toward a point and drags everything in.",
           feels: "Swirling, controlled chaos.",
-          detail: "Captures objects into a real orbit — tuned for distance and speed so they don't collide or jitter.",
+          detail: "A custom orbit system keeps objects circling the centre at a stable distance and speed.",
         },
         {
           name: "Purple",
           color: "#7d3fcf",
           video: "/cet/purple.mp4",
           poster: "/cet/purple.jpg",
-          purpose: "Delete anything it touches.",
+          blurb: "Red and Blue forced together into an imaginary mass.",
           feels: "Overpowered finisher.",
-          detail: "Red + Blue combined into imaginary mass; dissolves objects from the exact point of impact.",
+          detail: "It deletes whatever it passes through, dissolving objects from the exact point of impact.",
         },
       ],
       // "How it was built" — four engineering notes. Each leads with the main
       // idea (always visible), with deeper detail tucked into an expander.
       build: [
         {
-          title: "Shaders + VFX",
-          body: "Every effect is custom, built from the ground up in Unity Shader Graph and particle systems — the deep black-hole pull on Red, the swirl on Blue, and Purple's chaotic destruction, plus custom lightning, wind, and debris. Purple burns objects away from the exact point it lands instead of shattering the whole mesh.",
+          title: "Shaders and VFX",
+          body: "Every effect is custom, built in Unity Shader Graph and particle systems. Red has a deep black hole pull, Blue swirls objects around it, and Purple tears them apart, with custom lightning, wind, and debris on top. Instead of shattering a full mesh, Purple uses a dissolve that burns objects away from the point it hits.",
           details: [
-            "The dissolve is a URP Shader Graph driven from gameplay: the physics layer reports the precise surface contact point, and that world position seeds the dissolve so the burn radiates from the hit, not the object's pivot — a cheap effect that reads as real destruction.",
-            "A Toon Shader from the Unity Asset Store is the base; I built custom materials from it for the player, objects, and environment to land the anime look. The shader graphs, particle effects, and the link from a gameplay impact to a shader parameter are mine.",
+            "The dissolve is a URP Shader Graph driven from gameplay. The physics layer reports the exact surface contact point, and that position seeds the dissolve, so the burn spreads from where the hit landed rather than the object's center. It is a cheap effect that reads as real destruction.",
+            "The toon look starts from a Toon Shader on the Unity Asset Store. I built custom materials from it for the player, objects, and environment. The shader graphs, particle effects, and the wiring from a gameplay impact to a shader parameter are my work.",
           ],
           media: { type: "video", src: "/cet/redshader.mp4", poster: "/cet/redshader.jpg" },
         },
         {
           title: "Animation pipeline",
-          body: "A fully animated character built with Blender and Mixamo — walk, idle, jump, 3D movement, strafing while aiming, and custom cast animations matched to the anime. It stays responsive while looking smooth: you keep moving and strafing while an ability fires.",
+          body: "The character is fully animated with Blender and Mixamo. It has walk, idle, jump, full 3D movement, strafing while aiming, and custom cast animations matched to the anime. You keep moving and strafing while an ability fires, so it stays responsive without feeling stiff.",
           details: [
-            "Casts play on a masked upper-body layer timed to the frame the ability commits, so the cast blends over locomotion instead of locking the player in place.",
-            "Blender handled retargeting and the custom attack poses; Unity's animator drives the movement blends, strafe, and layer masks at runtime.",
+            "The ability controller raises events when a cast starts and which colour it is. A small animation controller listens to those events and sets the animator parameters. The casting animation plays on the upper body while the legs keep walking, running, or standing on their own, so you can move and aim while a cast is going off.",
+            "I used Blender for retargeting and the custom attack poses, and Unity's animator handles the blending at runtime.",
           ],
           media: { type: "video", src: "/cet/blender.mp4", poster: "/cet/blender.jpg" },
         },
         {
           title: "Systems architecture",
-          body: "Abilities are data, not code. Each is a ScriptableObject pairing a physics profile with a feedback profile; one physics service applies the forces, and a static feedback bus drives camera and audio — so gameplay logic stays decoupled from the juice.",
+          body: "Abilities are data, not code. Each one is a ScriptableObject that pairs a physics profile with a feedback profile. A single physics service applies the forces, and a separate feedback bus drives the camera and audio, which keeps gameplay logic decoupled from the effects.",
           details: [
-            "Input becomes an ability command on a channel. The controller commits on press, and if both colours land inside a short window it upgrades the cast to Purple and refunds the colour already spent.",
-            "The physics service runs one non-allocating overlap query per tick, caps the hit count, and de-duplicates by rigidbody root (so a ragdoll is pushed once), then hands each hit to the active ability's physics profile — Red pushes, Blue captures into orbit, Purple deletes.",
-            "Casts raise events on the feedback bus; separate presenters handle camera shake (a projection-matrix skew, so the transform never moves) and audio. Adding a new ability is authoring an asset, not writing a system.",
+            "Input becomes an ability command on a channel. The controller commits on press, and if both colours land inside a short window it upgrades the cast to Purple and refunds the colour you already spent.",
+            "The physics service runs one non-allocating overlap query per tick, caps the hit count, and de-duplicates by rigidbody root so a ragdoll only gets pushed once. It then hands each hit to the active ability's physics profile. Red pushes, Blue captures into orbit, and Purple deletes.",
+            "Casts raise events on the feedback bus, and separate presenters handle camera shake and audio. The shake skews the camera's projection matrix instead of moving its transform, so it never fights the camera rig.",
+            "The arena, HUD, and environment are generated by editor tools I wrote, so I could rebuild and retune the layout quickly instead of placing everything by hand.",
           ],
-          media: { type: "diagram" },
+          components: [
+            { name: "Input", role: "Turns controls into ability commands on a channel." },
+            { name: "Ability (data)", role: "A ScriptableObject pairing a physics profile with a feedback profile." },
+            { name: "Physics service", role: "One non-allocating query per tick, applied through each ability's profile." },
+            { name: "Feedback bus", role: "Events that drive camera shake and audio, separate from gameplay." },
+            { name: "Trial layer", role: "Limits casts and scores destruction without touching the physics." },
+          ],
         },
         {
           title: "Trial mode",
-          body: "To make it a game, the trial gives you a limited set of casts — 5 Red, 5 Blue, 2 Purple — and 60 seconds to destroy as much of the arena as you can, scored and graded. The map and abilities are tuned so a first run scores okay, but there's plenty of room to chase a better one.",
+          body: "To make it a game, the trial gives you a limited set of casts (5 Red, 5 Blue, 2 Purple) and 60 seconds to destroy as much of the arena as you can. The run is graded on the same scale sorcerers are ranked on in the anime, from Grade 4 up to Special Grade. I tuned it to be easy to learn but hard to master, so a first run already feels good while a top grade rewards careful aim and combos.",
           details: [
-            "Objects score once, the first time they're meaningfully broken: deleted by Purple, detached when a joint snaps, displaced far from where they started, or knocked out of bounds. That's how Red and Blue earn score without dealing damage.",
-            "The physics opens up combos — differently sized objects shove and drag each other, so a well-aimed cast can chain into far more destruction than it touches directly. The grade ladder runs from Grade 4 up to Special Grade.",
+            "Each object scores once, the first time it is meaningfully broken. That can be deleted by Purple, detached when a joint snaps, knocked far from where it started, or thrown out of bounds. It is how Red and Blue earn score without dealing any damage.",
+            "The physics also opens up combos. Different sized objects shove and drag each other, so a well aimed cast can set off far more destruction than it touches directly.",
           ],
           media: { type: "video", src: "/cet/trial.mp4", poster: "/cet/trial.jpg" },
         },
       ],
       // "What I learned" — a few substantive, human takeaways in my own words.
       takeaways: [
-        "Game design is far harder than it looks. Most of the work is hundreds of small fixes a player would never notice — but they're exactly what makes something feel right.",
+        "Game design is much harder than it looks. Most of the work is hundreds of small fixes a player would never notice, but they are exactly what makes something feel right.",
         "To get a game to feel the way you want, you have to build the systems yourself. Owning the physics, shaders, and animation is what gave me the control to actually tune the feel.",
-        "AI is a great tool for building software, but game feel still needs a human touch — knowing when something \"feels right\" isn't something it can decide for you.",
+        "AI is a great tool for building software, but game feel still needs a human touch. Knowing when something feels right is not something it can decide for you.",
       ],
       tech: [
         "Unity",
@@ -365,7 +366,7 @@ export const portfolioConfig = {
   // A group can also carry a `note` — a short line rendered under its chips
   // (used for the AI tools, so we don't pad the list with every assistant).
   skillsFocus:
-    "Backend and security engineering — production APIs, data, and infrastructure, with a focus on cryptography and PKI. I also build AI-integrated tooling with agents and MCP.",
+    "Backend and security engineering: production APIs, data, and infrastructure, with a focus on cryptography and PKI. I also build AI-integrated tooling with agents and MCP.",
   skills: [
     {
       group: "Languages",

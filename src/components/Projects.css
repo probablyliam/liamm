@@ -146,14 +146,18 @@
 
 .pc-built li {
   position: relative;
-  padding-left: 1rem;
+  padding-left: 1.05rem;
 }
 
 .pc-built li::before {
-  content: "–";
+  content: "";
   position: absolute;
   left: 0;
-  color: var(--ink-3);
+  top: 0.5em;
+  width: 5px;
+  height: 5px;
+  border-radius: 1px;
+  background: var(--link);
 }
 
 /* Both cards: equal full width, media beside the body on wide screens */

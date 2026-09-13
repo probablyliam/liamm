@@ -56,8 +56,8 @@
       45deg,
       var(--panel-alt),
       var(--panel-alt) 10px,
-      #efeff1 10px,
-      #efeff1 20px
+      var(--border) 10px,
+      var(--border) 20px
     );
 }
 

@@ -23,18 +23,19 @@ export function Nav() {
           <span className="nav-name">{name}</span>
         </Link>
 
+        {/* Section links in the same order as the page itself. */}
         <nav className="nav-links" aria-label="Primary">
           <a href={sectionHref('projects')}>Projects</a>
-          <a href={sectionHref('experience')}>Experience</a>
           <a href={sectionHref('skills')}>Skills</a>
+          <a href={sectionHref('experience')}>Experience</a>
           <span className="nav-sep" aria-hidden="true" />
           {social.github && (
-            <a href={social.github} target="_blank" rel="noopener noreferrer">
+            <a href={social.github} target="_blank" rel="me noopener noreferrer">
               GitHub
             </a>
           )}
           {social.linkedin && (
-            <a href={social.linkedin} target="_blank" rel="noopener noreferrer">
+            <a href={social.linkedin} target="_blank" rel="me noopener noreferrer">
               LinkedIn
             </a>
           )}

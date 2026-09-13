@@ -393,6 +393,7 @@
 
 /* --- Planned media slot (compact, labelled, intentional) --------------- */
 .media-placeholder {
+  color: var(--ink-2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -406,8 +407,8 @@
     45deg,
     transparent,
     transparent 9px,
-    rgba(0, 0, 0, 0.018) 9px,
-    rgba(0, 0, 0, 0.018) 18px
+    color-mix(in srgb, currentColor 4%, transparent) 9px,
+    color-mix(in srgb, currentColor 4%, transparent) 18px
   );
 }
 
@@ -420,63 +421,12 @@
   color: var(--ink-2);
 }
 
-/* --- "Details" expander: a clearly tappable control, depth on demand ---- */
+/* --- "Technical details" expander (shared .disclosure primitive) -------- */
 .build-more {
   margin-top: 0.85rem;
 }
 
-.build-more > summary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  width: fit-content;
-  cursor: pointer;
-  list-style: none;
-  user-select: none;
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--ink-2);
-  background: var(--panel-alt);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius);
-  padding: 0.32rem 0.65rem;
-  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
-}
-
-.build-more > summary::-webkit-details-marker {
-  display: none;
-}
-
-/* Chevron points right when closed, rotates down when open. */
-.build-more > summary::before {
-  content: "›";
-  font-size: 1rem;
-  line-height: 1;
-  transition: transform 0.15s ease;
-}
-
-.build-more[open] > summary::before {
-  transform: rotate(90deg);
-}
-
-.build-more > summary:hover,
-.build-more > summary:focus-visible,
-.build-more[open] > summary {
-  background: var(--row-hover);
-  border-color: var(--link);
-  color: var(--link-hover);
-}
-
-/* Revealed detail reads as a nested block tied to its toggle. */
-.build-more-body {
-  margin-top: 0.7rem;
-  padding-left: 0.85rem;
-  border-left: 2px solid var(--border-strong);
-}
-
-.build-more-body .build-body + .build-body {
+.build-more .build-body + .build-body {
   margin-top: 0.5rem;
 }
 
@@ -629,8 +579,4 @@
 
 .lightbox-close:hover {
   background: rgba(255, 255, 255, 0.2);
-}
-
-.detail-missing h1 {
-  margin-bottom: 0.75rem;
 }

@@ -24,17 +24,40 @@ export function Experience() {
                 <th scope="col">Location</th>
               </tr>
             </thead>
-            <tbody>
-              {experience.map((job) => (
-                <tr key={job.id}>
-                  <td data-label="Role" className="exp-role">{job.title}</td>
-                  <td data-label="Company">{job.company}</td>
-                  <td data-label="Type">{job.employmentType}</td>
-                  <td data-label="Period" className="exp-period">{job.period}</td>
-                  <td data-label="Location">{job.location}</td>
-                </tr>
-              ))}
-            </tbody>
+            {/* One <tbody> per role so a summary row stays grouped with its
+                header row (and hovers as one unit). */}
+            {experience.map((job) => {
+              const highlights = job.highlights || []
+              const hasDetail = !!job.summary || highlights.length > 0
+              return (
+                <tbody key={job.id} className="exp-job">
+                  <tr className={hasDetail ? 'has-detail' : undefined}>
+                    <td data-label="Role" className="exp-role">{job.title}</td>
+                    <td data-label="Company">{job.company}</td>
+                    <td data-label="Type">{job.employmentType}</td>
+                    <td data-label="Period" className="exp-period">{job.period}</td>
+                    <td data-label="Location">{job.location}</td>
+                  </tr>
+                  {hasDetail && (
+                    <tr className="exp-detail-row">
+                      <td colSpan={5}>
+                        {job.summary && <p className="exp-summary">{job.summary}</p>}
+                        {highlights.length > 0 && (
+                          <details className="disclosure exp-more">
+                            <summary>{highlights.length} highlights</summary>
+                            <ul className="disclosure-body exp-highlights">
+                              {highlights.map((h, i) => (
+                                <li key={i}>{h}</li>
+                              ))}
+                            </ul>
+                          </details>
+                        )}
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              )
+            })}
           </table>
         </div>
 

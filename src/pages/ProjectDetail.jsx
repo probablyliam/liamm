@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { portfolioConfig } from '../config'
+import { NotFound } from './NotFound'
 import './ProjectDetail.css'
 
 const LINK_LABELS = {
@@ -23,12 +24,10 @@ function statusClass(status = '') {
 // and it honors reduced-motion by showing the poster with manual controls.
 function AmbientClip({ src, poster, caption, className = '', onExpand }) {
   const ref = useRef(null)
-  const [reduce, setReduce] = useState(false)
+  const [reduce] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
 
   useEffect(() => {
-    const m = window.matchMedia('(prefers-reduced-motion: reduce)')
-    setReduce(m.matches)
-    if (m.matches) return
+    if (reduce) return undefined
 
     const v = ref.current
     if (!v) return
@@ -41,7 +40,7 @@ function AmbientClip({ src, poster, caption, className = '', onExpand }) {
     )
     io.observe(v)
     return () => io.disconnect()
-  }, [])
+  }, [reduce])
 
   const frame = (
     <div className={`media-frame media-video ${caption ? '' : className}`.trim()}>
@@ -161,6 +160,16 @@ export function ProjectDetail() {
     window.scrollTo(0, 0)
   }, [slug])
 
+  // Give the tab and browser history a real title per project.
+  useEffect(() => {
+    if (!project) return undefined
+    const prev = document.title
+    document.title = `${project.title} \u2014 ${portfolioConfig.name}`
+    return () => {
+      document.title = prev
+    }
+  }, [project])
+
   const features = project?.features || []
   const abilities = project?.abilities || []
   const build = project?.build || []
@@ -206,10 +215,9 @@ export function ProjectDetail() {
 
   if (!project) {
     return (
-      <section className="section wrap detail-missing">
-        <h1>Project not found</h1>
+      <NotFound title="Project not found">
         <p><Link to="/#projects">← Back to projects</Link></p>
-      </section>
+      </NotFound>
     )
   }
 
@@ -376,11 +384,9 @@ export function ProjectDetail() {
                             <p key={j} className="build-body">{p}</p>
                           ))}
                           {b.details && b.details.length > 0 && (
-                            <details className="build-more">
-                              <summary>
-                                <span className="build-more-toggle">Technical details</span>
-                              </summary>
-                              <div className="build-more-body">
+                            <details className="disclosure build-more">
+                              <summary>Technical details</summary>
+                              <div className="disclosure-body">
                                 {b.details.map((p, j) => (
                                   <p key={j} className="build-body">{p}</p>
                                 ))}

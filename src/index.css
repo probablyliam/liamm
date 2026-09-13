@@ -16,6 +16,8 @@
   --link: #1a5cad;
   --link-hover: #103e75;
   --link-visited: #5b3a9e;
+  --link-ink: #ffffff;    /* text on a --link filled button */
+  --selection: #cfe0f7;
 
   --row-hover: #eef4fc;   /* subtle hover fill */
 
@@ -115,7 +117,7 @@ a:hover {
 }
 
 ::selection {
-  background: #cfe0f7;
+  background: var(--selection);
 }
 
 img,
@@ -290,13 +292,66 @@ ol {
 .btn-primary {
   background: var(--link);
   border-color: var(--link);
-  color: #fff;
+  color: var(--link-ink);
 }
 
 .btn-primary:hover {
   background: var(--link-hover);
   border-color: var(--link-hover);
-  color: #fff;
+  color: var(--link-ink);
+}
+
+/* Disclosure: a clearly tappable "more" control with depth on demand.
+   Used for technical details on project pages and highlights in Experience. */
+.disclosure > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: fit-content;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-2);
+  background: var(--panel-alt);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: 0.32rem 0.65rem;
+  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+
+.disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Chevron points right when closed, rotates down when open. */
+.disclosure > summary::before {
+  content: "\203A";
+  font-size: 1rem;
+  line-height: 1;
+  transition: transform 0.15s ease;
+}
+
+.disclosure[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.disclosure > summary:hover,
+.disclosure > summary:focus-visible,
+.disclosure[open] > summary {
+  background: var(--row-hover);
+  border-color: var(--link);
+  color: var(--link-hover);
+}
+
+/* Revealed content reads as a nested block tied to its toggle. */
+.disclosure-body {
+  margin-top: 0.7rem;
+  padding-left: 0.85rem;
+  border-left: 2px solid var(--border-strong);
 }
 
 /* Key/value definition rows (spec sheet) */
@@ -326,6 +381,41 @@ ol {
   }
   .kv dd {
     margin-bottom: 0.6rem;
+  }
+}
+
+/* --- Dark: same palette, inverted. Follows the OS setting; no toggle. -- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #131416;
+    --panel: #1b1d20;
+    --panel-alt: #222528;
+    --header-bg: #0e1114;
+    --header-ink: #e6e7ea;
+
+    --ink: #e8e9ec;
+    --ink-2: #c3c5cb;
+    --ink-3: #8f929a;
+
+    --border: #2d3035;
+    --border-strong: #41454c;
+
+    --link: #7fabea;
+    --link-hover: #a9c6f3;
+    --link-visited: #b39ddb;
+    --link-ink: #0e1420;
+    --selection: #2b4a7a;
+
+    --row-hover: #1e2733;
+
+    --ok: #6cc47a;
+    --ok-bg: #16281a;
+    --wip: #e0a24d;
+    --wip-bg: #2d2211;
+    --idle: #a4a7ae;
+    --idle-bg: #26282c;
+
+    color-scheme: dark;
   }
 }
 

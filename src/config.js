@@ -113,12 +113,13 @@ export const portfolioConfig = {
       kind: "Interactive data visualization",
       featured: false,
       summary:
-        "A visual, node-based map of the Roman emperors and how succession actually passed between them.",
+        "A visual, node-based map of all 84 Western Roman emperors and how succession actually passed between them.",
       problem:
         "Roman succession rarely ran father to son. Emperors often adopted their heirs, and the line sometimes passed through a grandchild, so the real connections are hard to follow.",
       built: [
         "Modeled every emperor and the exact relationship on each link (born, adopted, or succession).",
-        "Rendered the full network as a pannable, zoomable graph you can select and expand.",
+        "Rendered the full network as a pannable, zoomable graph with search, a legend, and one-click navigation between relatives.",
+        "Wrote a custom chronological layout so nodes and edges never overlap, with a detail panel for each ruler's reign, family, and sources.",
       ],
       cover: "/imperial-lineage.jpg",
       preview: "/imperial/preview.mp4", // short, muted hover clip
@@ -129,17 +130,19 @@ export const portfolioConfig = {
         type: "video",
         src: "/imperial/imperial.mp4",
         poster: "/imperial/imperial.jpg",
-        caption: "Selecting emperors and expanding their lineage in the live graph.",
+        caption: "Searching for emperors and following family links in the live graph.",
       },
       description:
-        "I've always been interested in the Roman empire, and especially the tangled connections between generations. An emperor's grandchild might have a child who eventually takes the throne, or an emperor might adopt a suitable heir instead of a trueborn son. I built a node-based view of the whole succession so I could actually see those threads. You can select anyone to see their birth, death, and reign, and expand the descendants of a single person or the entire imperial line.",
+        "I've always been interested in the Roman empire, and especially the tangled connections between generations. An emperor's grandchild might have a child who eventually takes the throne, or an emperor might adopt a suitable heir instead of a trueborn son. I built a node-based view of the whole succession so I could actually see those threads. The whole tree is on screen from the start: select anyone to see their portrait, birth, death, and reign, search for a name to jump to them, and follow parents, children, and successors straight from the detail panel.",
       features: [
-        "Select any individual to see their birth, death, and reign",
-        "Expand the descendants of one person, or load the entire imperial lineage",
+        "Select any individual to see their portrait, birth, death, and reign",
+        "Search for any emperor or relative and the graph centres on them",
+        "Move between predecessors, successors, parents, and children from the detail panel",
         "See how each link was made: born to them, adopted, or a succession that skipped the bloodline",
-        "Pan, zoom, and explore the full network of emperors",
+        "Pan and zoom the full network, or hide relatives to see the bare succession chain",
+        "A custom chronological layout keeps the graph readable, with no overlapping nodes or edges",
       ],
-      tech: ["React", "TypeScript", "Vite", "Cytoscape.js"],
+      tech: ["React", "TypeScript", "Vite", "Cytoscape.js", "Node.js"],
       links: {
         live: "https://imperial-lineage.vercel.app/",
         github: "",
@@ -150,12 +153,12 @@ export const portfolioConfig = {
       slug: "cursed-energy-trial",
       title: "Cursed Energy Trial",
       year: "2026",
-      status: "Playable demo",
+      status: "Unity demo",
       kind: "Unity combat & physics systems demo",
       featured: true,
       // One-line hook for the project card.
       summary:
-        "A playable Unity combat demo where you play as Gojo and use three physics-driven abilities to tear an arena apart against the clock.",
+        "A Unity combat demo where you play as Gojo and use three physics-driven abilities to tear an arena apart against the clock.",
       // Shown as "Problem" on the detail page — framed as the challenge I set.
       problem:
         "Build real-time game systems and game feel from scratch in Unity, covering physics-driven abilities, destruction, and a full scoring loop, end to end.",
@@ -180,7 +183,7 @@ export const portfolioConfig = {
       },
       // The one-sentence "what is this", shown directly under the hero.
       tagline:
-        "A playable Unity demo inspired by Jujutsu Kaisen, where you play as Gojo and use his cursed techniques to push, pull, and erase everything in the arena.",
+        "A Unity demo inspired by Jujutsu Kaisen, where you play as Gojo and use his cursed techniques to push, pull, and erase everything in the arena.",
       // A short overview — the main idea, for anyone who reads on.
       description:
         "I wanted to make something that lets you feel like Gojo, using his powerful abilities to throw the environment around, with a fun gameplay loop on top. The core of it was getting the abilities to feel right, getting the look right with the toon shader, and writing custom shaders for each ability so they stay true to the source material while still feeling unique to the game. It also has the parts you would expect from a real game: full movement, full animation, and a custom UI.",
@@ -276,7 +279,7 @@ export const portfolioConfig = {
       takeaways: [
         "Game design is much harder than it looks. Most of the work is hundreds of small fixes a player would never notice, but they are exactly what makes something feel right.",
         "To get a game to feel the way you want, you have to build the systems yourself. Owning the physics, shaders, and animation is what gave me the control to actually tune the feel.",
-        "AI is a great tool for building software, but game feel still needs a human touch. Knowing when something feels right is not something it can decide for you.",
+        "AI is a great tool for building software. I drove Unity and Blender through their MCP servers for editor tasks, asset generation, and scene setup, but game feel still needs a human touch. Knowing when something feels right is not something it can decide for you.",
       ],
       tech: [
         "Unity",
@@ -301,6 +304,8 @@ export const portfolioConfig = {
   // --- Experience -----------------------------------------------------------
   // One plain-English `summary` line per role does more than a title and a
   // date ever will. No internal names/systems — just what the work was.
+  // `highlights` (optional array) renders a small expander of concrete
+  // outcomes. Left out on purpose: this page is public, so it stays high level.
   experience: [
     {
       id: 1,
@@ -309,7 +314,8 @@ export const portfolioConfig = {
       employmentType: "Full-time",
       period: "Jan 2024 – Present",
       location: "Toronto, ON",
-      summary: "",
+      summary:
+        "Build and run the enterprise key and certificate management platform (Python/Django), automate the operations around it, and mentor co-op developers.",
     },
     {
       id: 2,
@@ -318,7 +324,8 @@ export const portfolioConfig = {
       employmentType: "Co-op",
       period: "May 2023 – Aug 2023",
       location: "Toronto, ON",
-      summary: "",
+      summary:
+        "Extended the key management platform to track keys across AWS, Azure, and Salesforce through REST APIs and SQL data models, and automated key imports from the enterprise key manager.",
     },
     {
       id: 3,
@@ -373,9 +380,10 @@ export const portfolioConfig = {
       items: [
         { name: "Python", pro: true },
         { name: "C#", pro: true },
-        { name: "C / C++" },
         { name: "JavaScript", pro: true },
+        { name: "TypeScript" },
         { name: "PowerShell", pro: true },
+        { name: "C / C++" },
         { name: "Java" },
       ],
     },
@@ -389,7 +397,6 @@ export const portfolioConfig = {
         { name: "REST APIs", pro: true },
         { name: "React" },
         { name: "Node.js" },
-        { name: "FastMCP" },
       ],
     },
     {
@@ -398,8 +405,12 @@ export const portfolioConfig = {
         { name: "SQL", pro: true },
         { name: "Data analysis & metrics", pro: true },
         { name: "Linux", pro: true },
-        { name: "Nginx", pro: true },
+        { name: "Docker", pro: true },
+        { name: "GitHub Actions", pro: true },
         { name: "Ansible", pro: true },
+        { name: "Nginx", pro: true },
+        { name: "AWS", pro: true },
+        { name: "Azure", pro: true },
         { name: "Git", pro: true },
         { name: "MongoDB" },
       ],
@@ -407,8 +418,9 @@ export const portfolioConfig = {
     {
       group: "Security",
       items: [
-        { name: "Application security", pro: true },
+        { name: "Cryptography & key management", pro: true },
         { name: "PKI / certificate management", pro: true },
+        { name: "Application security", pro: true },
         { name: "Active Directory", pro: true },
         { name: "LDAP", pro: true },
       ],
@@ -416,32 +428,10 @@ export const portfolioConfig = {
     {
       group: "AI-assisted development",
       items: [
-        { name: "Agent development" },
-        { name: "MCP servers (FastMCP)" },
+        { name: "MCP server & tool development", pro: true },
+        { name: "LLM agent integration", pro: true },
+        { name: "FastMCP", pro: true },
       ],
-      note: "Works daily with Claude Code, Cursor, ChatGPT, and Gemini.",
     },
   ],
-
-  // --- Working principles ---------------------------------------------------
-  // How I think about building software — engineering taste, not philosophy.
-  // Shown near the bottom, after Experience.
-  principles: {
-    intro:
-      "A few ideas that hold across everything I build, from production services to side projects.",
-    items: [
-      {
-        title: "Fast and practical",
-        body: "I like software that gets to the point. The best interfaces make the important actions obvious and avoid putting polish ahead of usefulness.",
-      },
-      {
-        title: "Clear cause and effect",
-        body: "Good tools should respond clearly to what the user does. Whether it is a dashboard, simulation, internal tool, or game system, the user should understand what changed and why.",
-      },
-      {
-        title: "Correct and maintainable",
-        body: "I care about systems that hold up in real use and stay clear enough for the next person to work on. A project is better when the core logic, structure, and tradeoffs are understandable.",
-      },
-    ],
-  },
 };

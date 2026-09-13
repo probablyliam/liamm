@@ -19,9 +19,10 @@ src/
 ├── config.js              # ← all content lives here
 ├── pages/
 │   ├── Home.jsx           # the single-page sections
-│   └── ProjectDetail.jsx  # /projects/<slug> detail page
-├── components/            # Nav, Hero, Projects, Experience, Skills, About, Footer
-├── index.css             # design tokens (colors, type, blueprint grid)
+│   ├── ProjectDetail.jsx  # /projects/<slug> detail page
+│   └── NotFound.jsx       # any unknown URL
+├── components/            # Nav, Intro, Projects, Skills, Experience, Footer
+├── index.css             # design tokens (light + dark), shared primitives
 └── App.jsx               # routing
 ```
 

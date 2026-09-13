@@ -4,7 +4,6 @@ import { Intro } from '../components/Intro'
 import { Projects } from '../components/Projects'
 import { Experience } from '../components/Experience'
 import { Skills } from '../components/Skills'
-import { Principles } from '../components/Principles'
 
 export function Home() {
   const { hash } = useLocation()
@@ -25,7 +24,6 @@ export function Home() {
       <Projects />
       <Skills />
       <Experience />
-      <Principles />
     </>
   )
 }

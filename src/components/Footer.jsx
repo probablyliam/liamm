@@ -12,10 +12,10 @@ export function Footer() {
       <div className="wrap footer-inner">
         <div className="footer-links">
           {social.github && (
-            <a href={social.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href={social.github} target="_blank" rel="me noopener noreferrer">GitHub</a>
           )}
           {social.linkedin && (
-            <a href={social.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href={social.linkedin} target="_blank" rel="me noopener noreferrer">LinkedIn</a>
           )}
           {social.resume && (
             <a href={social.resume} target="_blank" rel="noopener noreferrer">Résumé</a>

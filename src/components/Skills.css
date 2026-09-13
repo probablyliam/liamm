@@ -33,7 +33,7 @@
 
 .skill-items li {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.35rem;
   font-family: var(--mono);
   font-size: 0.8rem;
@@ -56,6 +56,12 @@
   border-radius: 50%;
   background: var(--ok);
   flex: 0 0 auto;
+  /* Sit on the first line of text, even when a chip wraps to two lines. */
+  margin-top: 0.5em;
+}
+
+.skills-legend .skill-dot {
+  margin-top: 0;
 }
 
 .skills-legend {

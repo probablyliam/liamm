@@ -28,11 +28,17 @@
   vertical-align: top;
 }
 
-.exp-table tbody tr:last-child td {
+/* A role with a summary row: the header row hands its bottom border to it. */
+.exp-table tr.has-detail td {
+  border-bottom: none;
+  padding-bottom: 0.15rem;
+}
+
+.exp-table tbody:last-child tr:last-child td {
   border-bottom: none;
 }
 
-.exp-table tbody tr:hover {
+.exp-table tbody:hover {
   background: var(--row-hover);
 }
 
@@ -45,6 +51,49 @@
   font-family: var(--mono);
   font-size: 0.82rem;
   white-space: nowrap;
+}
+
+/* Summary row: one plain line about the work, plus optional highlights. */
+.exp-detail-row td {
+  padding-top: 0;
+  padding-bottom: 0.7rem;
+}
+
+.exp-summary {
+  max-width: 78ch;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.exp-more {
+  margin-top: 0.55rem;
+}
+
+.exp-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  max-width: 78ch;
+}
+
+.exp-highlights li {
+  position: relative;
+  padding-left: 1.05rem;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+.exp-highlights li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 5px;
+  height: 5px;
+  border-radius: 1px;
+  background: var(--link);
 }
 
 /* Education block */
@@ -93,11 +142,11 @@
     display: block;
     width: 100%;
   }
-  .exp-table tr {
+  .exp-table tbody {
     padding: 0.6rem 0.85rem;
     border-bottom: 1px solid var(--border);
   }
-  .exp-table tbody tr:last-child {
+  .exp-table tbody:last-child {
     border-bottom: none;
   }
   .exp-table td {
@@ -114,6 +163,14 @@
     text-transform: uppercase;
     letter-spacing: 0.03em;
     color: var(--ink-3);
+  }
+  .exp-table .exp-detail-row td {
+    display: block;
+    padding-top: 0.45rem;
+    padding-bottom: 0.1rem;
+  }
+  .exp-table .exp-detail-row td::before {
+    content: none;
   }
   .exp-role {
     font-size: 1rem;

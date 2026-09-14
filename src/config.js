@@ -112,8 +112,6 @@ export const portfolioConfig = {
       status: "Live",
       kind: "Interactive data visualization",
       featured: false,
-      summary:
-        "A visual, node-based map of all 84 Western Roman emperors and how succession actually passed between them.",
       problem:
         "Roman succession rarely ran father to son. Emperors often adopted their heirs, and the line sometimes passed through a grandchild, so the real connections are hard to follow.",
       built: [
@@ -157,8 +155,6 @@ export const portfolioConfig = {
       kind: "Unity combat & physics systems demo",
       featured: true,
       // One-line hook for the project card.
-      summary:
-        "A Unity combat demo where you play as Gojo and use three physics-driven abilities to tear an arena apart against the clock.",
       // Shown as "Problem" on the detail page — framed as the challenge I set.
       problem:
         "Build real-time game systems and game feel from scratch in Unity, covering physics-driven abilities, destruction, and a full scoring loop, end to end.",
@@ -302,10 +298,9 @@ export const portfolioConfig = {
   ],
 
   // --- Experience -----------------------------------------------------------
-  // One plain-English `summary` line per role does more than a title and a
-  // date ever will. No internal names/systems — just what the work was.
-  // `highlights` (optional array) renders a small expander of concrete
-  // outcomes. Left out on purpose: this page is public, so it stays high level.
+  // Roles are listed as title, company, type, period, and location only.
+  // The component supports an optional `summary` line and `highlights` array,
+  // but this page is public, so the specifics of the work stay off it.
   experience: [
     {
       id: 1,
@@ -314,8 +309,6 @@ export const portfolioConfig = {
       employmentType: "Full-time",
       period: "Jan 2024 – Present",
       location: "Toronto, ON",
-      summary:
-        "Build and run the enterprise key and certificate management platform (Python/Django), automate the operations around it, and mentor co-op developers.",
     },
     {
       id: 2,
@@ -324,8 +317,6 @@ export const portfolioConfig = {
       employmentType: "Co-op",
       period: "May 2023 – Aug 2023",
       location: "Toronto, ON",
-      summary:
-        "Extended the key management platform to track keys across AWS, Azure, and Salesforce through REST APIs and SQL data models, and automated key imports from the enterprise key manager.",
     },
     {
       id: 3,
@@ -334,7 +325,6 @@ export const portfolioConfig = {
       employmentType: "Co-op",
       period: "May 2022 – Aug 2022",
       location: "Ottawa, ON",
-      summary: "",
     },
     {
       id: 4,
@@ -343,7 +333,6 @@ export const portfolioConfig = {
       employmentType: "Co-op",
       period: "May 2021 – Dec 2021",
       location: "Ottawa, ON",
-      summary: "",
     },
     {
       id: 5,
@@ -352,7 +341,6 @@ export const portfolioConfig = {
       employmentType: "Internship",
       period: "May 2020 – Aug 2020",
       location: "Toronto, ON",
-      summary: "",
     },
   ],
 

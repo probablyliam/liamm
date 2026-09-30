@@ -1,6 +1,6 @@
 # Portfolio — Liam Maiorino
 
-Personal portfolio site. React + Vite, deployed on Vercel (auto-deploys on push to `main`).
+Personal portfolio site, live at [liamm.ca](https://liamm.ca). React + Vite, deployed on Vercel (auto-deploys on push to `main`).
 All content lives in **`src/config.js`** — edit that one file to update the site.
 
 ## Run locally
@@ -57,9 +57,6 @@ Each project in `config.js` gets its own shareable page at `/projects/<slug>`.
 }
 ```
 
-**Showing off the Unity game:** drop screenshots/gifs in `/public`, add them to `media`,
-add a YouTube gameplay video with `{ type: "youtube", id: "…" }`, and link a build via
-`links.download`. No code changes needed.
 
 ## Other content
 
@@ -79,3 +76,7 @@ so deep links like `/projects/imperial-lineage` work on refresh.
 ```bash
 npm run build   # then deploy dist/ to any static host
 ```
+
+## License
+
+The code is here to read and learn from. The written content, images and video on the site are © Liam Maiorino, all rights reserved.

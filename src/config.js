@@ -146,7 +146,7 @@ export const portfolioConfig = {
       tech: ["React", "TypeScript", "Vite", "Cytoscape.js", "Node.js"],
       links: {
         live: "https://imperial-lineage.vercel.app/",
-        github: "",
+        github: "https://github.com/probablyliam/emperor-project",
       },
     },
     {
@@ -293,10 +293,7 @@ export const portfolioConfig = {
         "ProBuilder / CSG",
       ],
       links: {
-        // Fill in whatever you ship. Buttons only appear for non-empty links.
-        // download: "https://your-itch-page.itch.io/cursed-energy-trial", // a playable build
-        // devlog: "https://youtube.com/...",                              // a devlog video/playlist
-        // github: "https://github.com/probablyliam/...",                  // source, if you make it public
+        github: "https://github.com/probablyliam/JJKDemo",
       },
     },
   ],

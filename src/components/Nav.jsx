@@ -10,10 +10,6 @@ export function Nav() {
   // Section links jump within the home page; from a detail page they route home.
   const sectionHref = (id) => (onHome ? `#${id}` : `/#${id}`)
 
-  const contactHref = social.email ? `mailto:${social.email}` : social.linkedin
-  // External profile (LinkedIn fallback) opens in a new tab; a mailto: doesn't.
-  const contactProps = social.email ? {} : { target: '_blank', rel: 'noopener noreferrer' }
-
   return (
     <header className="nav">
       <div className="wrap nav-inner">
@@ -29,12 +25,7 @@ export function Nav() {
               GitHub
             </a>
           )}
-          {social.resume && (
-            <a href={social.resume} target="_blank" rel="noopener noreferrer">
-              Résumé
-            </a>
-          )}
-          <a href={contactHref} className="nav-contact" {...contactProps}>
+          <a href={social.linkedin} className="nav-contact" target="_blank" rel="noopener noreferrer">
             Contact
           </a>
         </nav>

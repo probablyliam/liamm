@@ -137,7 +137,6 @@
   background: #0d0e12;
 }
 
-.media-frame img,
 .media-frame video {
   width: 100%;
   display: block;
@@ -147,7 +146,6 @@
   aspect-ratio: 16 / 9;
 }
 
-.media-video iframe,
 .media-video video {
   position: absolute;
   inset: 0;
@@ -382,25 +380,6 @@
   width: 0.55rem;
   height: 2px;
   background: var(--accent);
-}
-
-/* --- Planned media slot ------------------------------------------------ */
-.media-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 0.9rem 1rem;
-  aspect-ratio: 16 / 9;
-  border: 1px dashed var(--rule-strong);
-  border-radius: var(--radius);
-  background: var(--surface);
-}
-
-.media-placeholder-label {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--ink-3);
 }
 
 /* --- "Technical details" expander -------------------------------------- */

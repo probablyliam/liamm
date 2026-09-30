@@ -6,9 +6,7 @@ import { isVideo, statusClass, usePrefersReducedMotion, useInViewPlayback } from
 
 const LINK_LABELS = [
   ['live', 'Live'],
-  ['download', 'Download'],
   ['github', 'Source'],
-  ['devlog', 'Devlog'],
 ]
 
 // The project's footage, large. The short preview loops while it's on
@@ -67,7 +65,6 @@ function ProjectRow({ project }) {
         </header>
 
         <div className="pj-detail">
-          {project.summary && <p className="pj-summary">{project.summary}</p>}
           {project.problem && (
             <div className="pj-block">
               <h4 className="pj-label">Problem</h4>

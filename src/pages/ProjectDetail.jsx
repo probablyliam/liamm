@@ -7,8 +7,6 @@ import './ProjectDetail.css'
 
 const LINK_LABELS = {
   live: 'Live site',
-  download: 'Download',
-  devlog: 'Devlog',
   github: 'Source',
 }
 
@@ -107,61 +105,23 @@ function ComponentMap({ items }) {
   )
 }
 
-// Build-row media: an ambient clip, a still image, or a labelled placeholder.
+// Build-row media: an ambient clip beside the text.
 function BuildMedia({ item, onExpand }) {
-  if (!item) return null
-  if (item.type === 'video' && item.src) {
-    return <AmbientClip src={item.src} poster={item.poster} onExpand={onExpand} />
-  }
-  if (item.src) {
-    return (
-      <div className="media-frame">
-        <img src={item.src} alt={item.alt || ''} loading="lazy" />
-      </div>
-    )
-  }
-  return (
-    <div className="media-placeholder">
-      <span className="media-placeholder-label">{item.placeholder || 'Media'}</span>
-    </div>
-  )
+  if (!item?.src) return null
+  return <AmbientClip src={item.src} poster={item.poster} onExpand={onExpand} />
 }
 
+// The finished result, shown first and full width.
 function Showcase({ showcase, onExpand }) {
-  if (!showcase) return null
-  if (showcase.type === 'video') {
-    return (
-      <AmbientClip
-        src={showcase.src}
-        poster={showcase.poster}
-        caption={showcase.caption}
-        className="hero-media"
-        onExpand={onExpand}
-      />
-    )
-  }
-  if (showcase.type === 'youtube') {
-    return (
-      <figure className="clip-fig hero-media">
-        <div className="media-frame media-video">
-          <iframe
-            src={`https://www.youtube.com/embed/${showcase.id}`}
-            title="Project video"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        </div>
-      </figure>
-    )
-  }
-  if (!showcase.src) return null
+  if (!showcase?.src) return null
   return (
-    <figure className="clip-fig hero-media">
-      <div className="media-frame">
-        <img src={showcase.src} alt={showcase.alt || ''} />
-      </div>
-      {showcase.caption && <figcaption>{showcase.caption}</figcaption>}
-    </figure>
+    <AmbientClip
+      src={showcase.src}
+      poster={showcase.poster}
+      caption={showcase.caption}
+      className="hero-media"
+      onExpand={onExpand}
+    />
   )
 }
 
@@ -239,7 +199,7 @@ export function ProjectDetail() {
 
   const links = project.links || {}
   const hasLinks = Object.values(links).some(Boolean)
-  const tagline = project.tagline || project.summary
+  const tagline = project.tagline
   const showcase = project.showcase
   const tech = project.tech || []
 
@@ -274,7 +234,7 @@ export function ProjectDetail() {
                       href={url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`btn ${key === 'live' || key === 'download' ? 'btn-primary' : ''}`}
+                      className={`btn ${key === 'live' ? 'btn-primary' : ''}`}
                     >
                       {LINK_LABELS[key] || key}
                     </a>
@@ -395,11 +355,7 @@ export function ProjectDetail() {
                             <div className="build-media">
                               <BuildMedia
                                 item={b.media}
-                                onExpand={
-                                  b.media.type === 'video' && b.media.src
-                                    ? () => setLightbox({ src: b.media.src, poster: b.media.poster })
-                                    : undefined
-                                }
+                                onExpand={() => setLightbox({ src: b.media.src, poster: b.media.poster })}
                               />
                             </div>
                           )

@@ -16,94 +16,36 @@ export const portfolioConfig = {
   intro:
     "I build and maintain cryptographic services at RBC, and use side projects to explore data visualization, simulations, tools, and game systems.",
 
-  // About. Kept for reference / optional reuse — not shown on the main page in
-  // the current utility-first layout.
-  about: {
-    lead: "I do my best work where the problems are hard and the outcome actually matters — building things that hold up, picking things up fast, and leaving the team and the codebase better than I found them.",
-    personal:
-      "Outside of work I'm usually outside. Skiing all winter, downhill and freestyle, then wakeboarding and lately tennis once it warms up. The rest of my time goes to playing guitar, a good game, and watching shows and movies with the people I care about.",
-
-    // Small "get to know me" cards. Each one is optional and degrades nicely
-    // if you don't have art yet — it'll show a clean labelled tile instead.
-    //   label     the category, e.g. "On repeat", "Favourite film"
-    //   title     the thing
-    //   subtitle  artist / year / one detail
-    //   art       image path in /public (or a full URL). Optional.
-    //   link      where clicking goes. Optional.
-    //   spotify   a Spotify track URL → renders a playable preview instead of
-    //             a static tile. Only used on the song. Optional.
-    favorites: [
-      {
-        label: "On repeat",
-        title: "Stay",
-        subtitle: "Post Malone",
-        art: "", // e.g. "/fav/stay.jpg"
-        // Paste a track link to get a real 30s preview player, e.g.
-        // spotify: "https://open.spotify.com/track/5PjdY0CKGZdEuoNab3yDmX",
-        spotify: "",
-        link: "",
-      },
-      {
-        label: "Favourite show",
-        title: "LOST",
-        subtitle: "2004 – 2010",
-        art: "", // e.g. "/fav/lost.jpg"
-        link: "",
-      },
-      {
-        label: "Favourite film",
-        title: "Dune: Part Two",
-        subtitle: "2024",
-        art: "", // e.g. "/fav/dune.jpg"
-        link: "",
-      },
-    ],
-  },
-
   // --- Links ----------------------------------------------------------------
-  // The "Contact" link uses `email` (mailto) if set, otherwise falls back to
-  // LinkedIn. Email is blank by default to avoid scrapers — add it if you'd
-  // rather take direct contact.
+  // Contact goes through LinkedIn. No email or phone on the site, on purpose.
   social: {
     github: "https://github.com/probablyliam",
     linkedin: "https://linkedin.com/in/liam-maiorino",
-    email: "",
-    // Optional: drop a PDF in /public and point here to show a "Résumé" link.
-    resume: "",
   },
 
   // --- Projects -------------------------------------------------------------
   // Every project gets its own shareable page at /projects/<slug>.
   //
-  // The schema scales: a small project just needs a cover, blurb and a few
-  // features. A big one (like the Unity game) can add a `preview` clip on the
-  // card, a `showcase` that leads with the finished result, and a `story`
-  // walking through how it came together.
-  //
-  //   --- card (the project directory) ---
-  //   kind      the "what type of work is this" line, e.g. "Interactive data viz"
-  //   summary   one-sentence description of the project.
-  //   problem   the problem it solves (1 line).
-  //   built     what you actually built — a string or array of short points.
-  //   tech      tech tags.
-  //   status    "Live", "In development", "Archived", etc.
-  //   cover     freeze-frame image shown on the card (path in /public)
-  //   preview   OPTIONAL short, muted clip that plays on hover (like YouTube).
-  //             Use a small .mp4/.webm. Falls back to the cover if absent.
-  //   featured  set true on ONE project to give it the big top slot.
-  //   accent    OPTIONAL { light, dark } colour used for this project's page.
+  //   --- card ---
+  //   title, year, status   status is a short label, e.g. "Live" or "Unity demo"
+  //   kind      the type of work, e.g. "Interactive data visualization"
+  //   problem   the problem it solves (1 line)
+  //   built     what you built: a string or an array of short points
+  //   tech      tech tags
+  //   cover     freeze-frame image for the card (path in /public)
+  //   preview   OPTIONAL short muted clip that loops on the card
+  //   featured  set true on ONE project to give it the big top slot
+  //   accent    OPTIONAL { light, dark } colour for this project's page
   //
   //   --- detail page ---
-  //   showcase  the finished result, shown FIRST. One of:
-  //               { type: "image",   src: "/shot.png", alt: "..." }
-  //               { type: "video",   src: "/clip.mp4", poster: "/poster.jpg" }
-  //               { type: "youtube", id: "VIDEO_ID" }
-  //   description  longer explanation in plain language.
-  //   features  list of notable points → shown as "Highlights".
-  //   story     OPTIONAL ordered blocks for bigger projects: { heading, body, media }
-  //             - body can be a string or an array of paragraphs.
-  //             - media is optional and uses the same shape as showcase.
-  //   links     any of: live, github, download, devlog (omit/empty to hide)
+  //   showcase     the finished result, shown first: { src, poster, caption }
+  //   tagline      one-line summary under the title
+  //   description  longer explanation in plain language
+  //   features     "Highlights": strings, or { title, detail }
+  //   abilities    OPTIONAL cards: { name, color, video, poster, blurb, feels, detail }
+  //   build        OPTIONAL "How it's built" rows: { title, body, details, media | components }
+  //   takeaways    OPTIONAL "What I learned" points
+  //   links        any of: live, github (empty to hide)
   projects: [
     {
       id: 1,
@@ -128,7 +70,6 @@ export const portfolioConfig = {
       tagline:
         "A visual, node-based map of Roman imperial succession, showing who descended from whom, who was adopted, and where the line passed by adoption instead of birth.",
       showcase: {
-        type: "video",
         src: "/imperial/imperial.mp4",
         poster: "/imperial/imperial.jpg",
         caption: "Searching for emperors and following family links in the live graph.",
@@ -176,7 +117,6 @@ export const portfolioConfig = {
       preview: "/cet/preview.mp4", // short, muted hover clip (YouTube-style)
       // Hero: the gameplay highlight reel. Autoplays muted, only while on screen.
       showcase: {
-        type: "video",
         src: "/cet/hero.mp4",
         poster: "/cet/hero.jpg",
         caption: "Gameplay preview.",
@@ -237,7 +177,7 @@ export const portfolioConfig = {
             "The dissolve is a URP Shader Graph driven from gameplay. The physics layer reports the exact surface contact point, and that position seeds the dissolve, so the burn spreads from where the hit landed rather than the object's center. It is a cheap effect that reads as real destruction.",
             "The toon look starts from a Toon Shader on the Unity Asset Store. I built custom materials from it for the player, objects, and environment. The shader graphs, particle effects, and the wiring from a gameplay impact to a shader parameter are my work.",
           ],
-          media: { type: "video", src: "/cet/redshader.mp4", poster: "/cet/redshader.jpg" },
+          media: { src: "/cet/redshader.mp4", poster: "/cet/redshader.jpg" },
         },
         {
           title: "Animation pipeline",
@@ -246,7 +186,7 @@ export const portfolioConfig = {
             "The ability controller raises events when a cast starts and which colour it is. A small animation controller listens to those events and sets the animator parameters. The casting animation plays on the upper body while the legs keep walking, running, or standing on their own, so you can move and aim while a cast is going off.",
             "I used Blender for retargeting and the custom attack poses, and Unity's animator handles the blending at runtime.",
           ],
-          media: { type: "video", src: "/cet/blender.mp4", poster: "/cet/blender.jpg" },
+          media: { src: "/cet/blender.mp4", poster: "/cet/blender.jpg" },
         },
         {
           title: "Systems architecture",
@@ -272,7 +212,7 @@ export const portfolioConfig = {
             "Each object scores once, the first time it is meaningfully broken. That can be deleted by Purple, detached when a joint snaps, knocked far from where it started, or thrown out of bounds. It is how Red and Blue earn score without dealing any damage.",
             "The physics also opens up combos. Different sized objects shove and drag each other, so a well aimed cast can set off far more destruction than it touches directly.",
           ],
-          media: { type: "video", src: "/cet/trial.mp4", poster: "/cet/trial.jpg" },
+          media: { src: "/cet/trial.mp4", poster: "/cet/trial.jpg" },
         },
       ],
       // "What I learned" — a few substantive, human takeaways in my own words.
@@ -300,8 +240,8 @@ export const portfolioConfig = {
 
   // --- Experience -----------------------------------------------------------
   // Roles are listed as title, company, type, period, and location only.
-  // The component supports an optional `summary` line and `highlights` array,
-  // but this page is public, so the specifics of the work stay off it.
+  // The component supports an optional one-line `summary`, but this page is
+  // public, so the specifics of the work stay off it.
   experience: [
     {
       id: 1,

@@ -36,34 +36,34 @@ Each project in `config.js` gets its own shareable page at `/projects/<slug>`.
   id: 3,
   slug: "my-project",                 // becomes /projects/my-project
   title: "My Project",
-  blurb: "One line shown on the card.",
   year: "2026",
-  status: "Live",                     // or "In development", etc.
-  cover: "/my-cover.jpg",             // card image (put file in /public). "" = grid placeholder
+  status: "Live",                     // short label, e.g. "Live" or "Unity demo"
+  kind: "Interactive data visualization",
+  problem: "The problem it solves, in one line.",
+  built: ["What I built", "One short point each"],
+  tech: ["React", "TypeScript"],
+  cover: "/my-project/cover.jpg",     // card image in /public
+  preview: "/my-project/preview.mp4", // optional muted loop on the card
+  showcase: { src: "/my-project/hero.mp4", poster: "/my-project/hero.jpg" },
+  tagline: "One-line summary under the title.",
   description: "Longer paragraph for the detail page.",
   features: ["Thing one", "Thing two"],
-  tech: ["Unity", "C#"],
-  media: [
-    { type: "youtube", id: "VIDEO_ID" },           // YouTube embed
-    { type: "video",   src: "/clip.mp4" },         // self-hosted file in /public
-    { type: "image",   src: "/shot.png", alt: "…" } // screenshot/gif in /public
-  ],
-  links: {                            // any of these; omit to hide the button
+  links: {                            // empty or missing hides the button
     live: "https://…",
-    download: "https://itch.io/…",
-    devlog: "https://…",
     github: "https://github.com/…"
   }
 }
 ```
 
+Bigger projects can add `abilities`, `build` and `takeaways` sections; the comment above
+`projects` in `config.js` lists every field.
 
 ## Other content
 
 - **Experience** — minimal by default. Add a one-line `summary` to any role to show it
   (keep it generic; no internal tool/system names).
 - **Skills** — grouped lists (`{ group, items }`).
-- **Résumé** — set `social.resume` to a PDF path in `/public` to show a Résumé link.
+- **Contact** — goes through LinkedIn. The site deliberately has no email or phone number.
 
 ## Theming
 

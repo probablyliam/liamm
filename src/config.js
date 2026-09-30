@@ -10,7 +10,7 @@ export const portfolioConfig = {
   location: "Toronto, ON",
 
   // Short, factual status line shown in the header/intro. Keep it concrete.
-  status: "Cryptography Developer @ RBC",
+  status: "Senior Cryptography Developer @ RBC",
 
   // The intro. A few practical sentences — what you do, not a sales pitch.
   intro:
@@ -308,14 +308,22 @@ export const portfolioConfig = {
   experience: [
     {
       id: 1,
-      title: "Cryptography Developer",
+      title: "Senior Cryptography Developer",
       company: "RBC",
       employmentType: "Full-time",
-      period: "Jan 2024 – Present",
+      period: "Jul 2025 – Present",
       location: "Toronto, ON",
     },
     {
       id: 2,
+      title: "Cryptography Developer",
+      company: "RBC",
+      employmentType: "Full-time",
+      period: "Jan 2024 – Jul 2025",
+      location: "Toronto, ON",
+    },
+    {
+      id: 3,
       title: "Cryptography Developer",
       company: "RBC",
       employmentType: "Co-op",
@@ -323,7 +331,7 @@ export const portfolioConfig = {
       location: "Toronto, ON",
     },
     {
-      id: 3,
+      id: 4,
       title: "Software Developer",
       company: "Optiwave Systems Inc.",
       employmentType: "Co-op",
@@ -331,7 +339,7 @@ export const portfolioConfig = {
       location: "Ottawa, ON",
     },
     {
-      id: 4,
+      id: 5,
       title: "Cyber Security Developer",
       company: "Hydro Ottawa",
       employmentType: "Co-op",
@@ -339,7 +347,7 @@ export const portfolioConfig = {
       location: "Ottawa, ON",
     },
     {
-      id: 5,
+      id: 6,
       title: "Software Developer",
       company: "RBC Wealth Management",
       employmentType: "Internship",

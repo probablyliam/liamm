@@ -1,8 +1,75 @@
 /* ===========================================================================
-   Project detail — built around fast scanning. The page answers, in order:
-   what is this, what makes it interesting, how does it play, how was it built,
-   what did I learn. No decorative sections; every block earns its place.
+   Project detail. The page answers, in order: what is this, what makes it
+   interesting, how does it play, how was it built, what did I learn.
    =========================================================================== */
+
+/* --- Per-project accent ------------------------------------------------- */
+.detail.has-accent {
+  --accent: var(--p-accent-light);
+  --accent-hover: color-mix(in srgb, var(--p-accent-light) 78%, #000);
+  --selection: color-mix(in srgb, var(--p-accent-light) 22%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  .detail.has-accent {
+    --accent: var(--p-accent-dark);
+    --accent-hover: color-mix(in srgb, var(--p-accent-dark) 80%, #fff);
+    --selection: color-mix(in srgb, var(--p-accent-dark) 30%, transparent);
+  }
+}
+
+.detail {
+  padding-top: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+/* --- Header ------------------------------------------------------------- */
+.detail-back {
+  margin-bottom: clamp(1.25rem, 3vw, 2rem);
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.detail-back a {
+  text-decoration: none;
+}
+
+.detail-title {
+  font-size: clamp(2.3rem, 7vw, 5.25rem);
+  font-stretch: var(--wide);
+  font-weight: 850;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+  margin-left: -0.03em;
+}
+
+.detail-headrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  margin: 1.1rem 0 clamp(1.5rem, 3vw, 2rem);
+}
+
+.detail-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.25rem;
+  font-size: 0.92rem;
+  color: var(--ink-3);
+}
+
+.detail-kind {
+  font-size: 1.05rem;
+  color: var(--ink-2);
+}
+
+.detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
 
 /* --- Layout: content with an optional sticky on-this-page rail --------- */
 .detail-layout {
@@ -12,8 +79,8 @@
 @media (min-width: 1000px) {
   .detail-layout.has-toc {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 170px;
-    gap: 2.75rem;
+    grid-template-columns: minmax(0, 1fr) 180px;
+    gap: 4rem;
     /* The toc column stretches to full height so its sticky nav can travel. */
     align-items: stretch;
   }
@@ -31,28 +98,25 @@
 
 .detail-toc-nav {
   position: sticky;
-  top: calc(var(--header-h) + 1.25rem);
+  top: calc(var(--header-h) + 1.5rem);
   display: flex;
   flex-direction: column;
 }
 
 .detail-toc-label {
-  font-family: var(--mono);
-  font-size: 0.66rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--ink-3);
-  padding-left: 0.85rem;
-  margin-bottom: 0.6rem;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--ink);
+  padding-left: 0.9rem;
+  margin-bottom: 0.5rem;
 }
 
 .detail-toc-link {
-  font-size: 0.82rem;
+  font-size: 0.88rem;
   color: var(--ink-3);
   text-decoration: none;
-  padding: 0.32rem 0 0.32rem 0.85rem;
-  border-left: 2px solid var(--border);
-  transition: color 0.12s ease, border-color 0.12s ease;
+  padding: 0.3rem 0 0.3rem 0.9rem;
+  border-left: 2px solid var(--rule);
 }
 
 .detail-toc-link:hover {
@@ -62,56 +126,15 @@
 .detail-toc-link.is-active {
   color: var(--ink);
   font-weight: 600;
-  border-left-color: var(--link);
-}
-
-.detail-back {
-  margin-bottom: 1rem;
-  font-size: 0.88rem;
-}
-
-.detail-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding-bottom: 0.85rem;
-  margin-bottom: 1.25rem;
-  border-bottom: 2px solid var(--ink);
-}
-
-.detail-titleblock h1 {
-  font-size: clamp(1.5rem, 4vw, 2rem);
-  margin-bottom: 0.5rem;
-}
-
-.detail-meta {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-}
-
-.detail-kind,
-.detail-year {
-  font-family: var(--mono);
-  font-size: 0.82rem;
-  color: var(--ink-3);
-}
-
-.detail-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  border-left-color: var(--accent);
 }
 
 /* --- Shared media frame ------------------------------------------------- */
 .media-frame {
-  border: 1px solid var(--border);
+  position: relative;
   border-radius: var(--radius);
   overflow: hidden;
-  background: var(--panel);
+  background: #0d0e12;
 }
 
 .media-frame img,
@@ -121,7 +144,6 @@
 }
 
 .media-video {
-  position: relative;
   aspect-ratio: 16 / 9;
 }
 
@@ -135,77 +157,75 @@
   object-fit: cover;
 }
 
-/* --- Hero: the finished result, shown first ---------------------------- */
+/* --- Hero: the finished result, full width ----------------------------- */
 .hero-media {
-  margin: 0 0 1rem;
+  margin: 0 0 clamp(2rem, 5vw, 3.5rem);
 }
 
-.hero-media figcaption {
-  margin-top: 0.5rem;
-  font-family: var(--mono);
-  font-size: 0.78rem;
+.clip-fig figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.86rem;
   color: var(--ink-3);
 }
 
-/* The one-sentence "what is this" — the 5-second read. */
+/* The one-sentence "what is this": the 5-second read. */
 .detail-tagline {
-  font-size: clamp(1.05rem, 2.2vw, 1.25rem);
-  line-height: 1.5;
+  font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
   color: var(--ink);
-  max-width: 72ch;
-  margin-bottom: 1.1rem;
+  max-width: 42ch;
+  margin-bottom: 1.25rem;
 }
 
-/* The toolset as pills, closing out the intro. */
 .detail-tools {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem 0.7rem;
+  align-items: baseline;
+  gap: 0.35rem 1rem;
 }
 
 .detail-tools-label {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--ink-3);
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--ink);
 }
 
 .detail-intro {
-  margin-bottom: 2.75rem;
+  margin-bottom: clamp(3rem, 6vw, 4.5rem);
   scroll-margin-top: calc(var(--header-h) + 1rem);
 }
 
 .detail-overview {
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.4rem;
 }
 
 /* --- Sections ---------------------------------------------------------- */
 .detail-section {
-  margin-bottom: 2.5rem;
+  margin-bottom: clamp(3rem, 6vw, 4.5rem);
   scroll-margin-top: calc(var(--header-h) + 1rem);
 }
 
 .detail-h2 {
-  font-size: 1.15rem;
-  letter-spacing: 0.01em;
-  padding-bottom: 0.4rem;
-  margin-bottom: 1.1rem;
-  border-bottom: 2px solid var(--ink);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-stretch: var(--semi-wide);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin-bottom: 1.5rem;
 }
 
 .detail-desc {
-  color: var(--ink-2);
-  max-width: 72ch;
-  line-height: 1.6;
+  max-width: 68ch;
+  line-height: 1.65;
 }
 
-/* --- What makes it interesting: six compact cards ---------------------- */
+/* --- What makes it interesting: six short notes ------------------------ */
 .hl-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.6rem;
+  gap: 1.5rem 2rem;
 }
 
 @media (min-width: 560px) {
@@ -219,39 +239,27 @@
 .hl {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
-  padding: 0.65rem 0.85rem;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--border-strong);
-  border-radius: var(--radius);
+  gap: 0.3rem;
+  padding-top: 0.75rem;
+  border-top: 2px solid var(--accent);
 }
 
-/* A muted accent per card so each topic reads as its own thing. */
-.hl:nth-child(6n + 1) { border-left-color: #4a73b8; }
-.hl:nth-child(6n + 2) { border-left-color: #3f9488; }
-.hl:nth-child(6n + 3) { border-left-color: #b5853c; }
-.hl:nth-child(6n + 4) { border-left-color: #8a5cc0; }
-.hl:nth-child(6n + 5) { border-left-color: #c0604d; }
-.hl:nth-child(6n + 6) { border-left-color: #5a9450; }
-
 .hl-title {
-  font-weight: 600;
-  font-size: 0.92rem;
+  font-weight: 700;
   color: var(--ink);
 }
 
 .hl-detail {
-  font-size: 0.84rem;
-  line-height: 1.4;
-  color: var(--ink-3);
+  font-size: 0.94rem;
+  line-height: 1.45;
+  color: var(--ink-2);
 }
 
-/* --- Custom abilities: the centerpiece, three colour-coded columns ----- */
+/* --- Custom abilities: three colour-coded columns ---------------------- */
 .abil-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.85rem;
+  gap: 2rem 1.5rem;
 }
 
 @media (min-width: 720px) {
@@ -259,175 +267,149 @@
 }
 
 .abil {
+  --abil: var(--ink);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .abil .media-frame {
-  border: 0;
-  border-bottom: 1px solid var(--border);
-  border-radius: 0;
+  border-bottom: 3px solid var(--abil);
+  border-radius: var(--radius) var(--radius) 0 0;
 }
 
 .abil-body {
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
-  padding: 0.8rem 0.85rem;
-}
-
-.abil-head {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.abil-dot {
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  flex: none;
+  gap: 0.6rem;
+  padding-top: 0.9rem;
 }
 
 .abil-name {
-  font-weight: 700;
-  font-size: 1.05rem;
+  font-size: 1.4rem;
+  font-stretch: var(--wide);
+  font-weight: 850;
+  letter-spacing: -0.02em;
+  color: var(--abil);
 }
 
-/* Flavour line under the ability name. */
+@media (prefers-color-scheme: dark) {
+  /* The ability colours are tuned for light paper; lift them on dark. */
+  .abil-name {
+    color: color-mix(in srgb, var(--abil) 70%, #fff);
+  }
+}
+
 .abil-blurb {
-  color: var(--ink-2);
-  font-size: 0.9rem;
-  line-height: 1.45;
+  font-size: 0.98rem;
+  line-height: 1.5;
 }
 
 .abil-kv {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 0.35rem 0.7rem;
+  gap: 0.4rem 0.9rem;
+  font-size: 0.92rem;
 }
 
 .abil-kv dt {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--ink-3);
-  padding-top: 0.1rem;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: nowrap;
 }
 
 .abil-kv dd {
   color: var(--ink-2);
-  font-size: 0.86rem;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
-/* --- How it was built: compact engineering notes, media beside --------- */
+/* --- How it was built: engineering notes, media beside ---------------- */
 .build-list {
   display: flex;
   flex-direction: column;
+  border-top: 1.5px solid var(--ink);
 }
 
 .build-row {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.7rem 1.5rem;
-  padding: 1.1rem 0;
-  border-top: 1px solid var(--border);
-}
-
-.build-row:first-child {
-  border-top: 0;
-  padding-top: 0;
+  gap: 1rem 2rem;
+  padding: 1.75rem 0;
+  border-bottom: 1px solid var(--rule);
 }
 
 @media (min-width: 720px) {
   .build-row {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: start;
   }
 }
 
 .build-title {
-  font-size: 1rem;
-  margin-bottom: 0.4rem;
+  font-size: 1.2rem;
+  font-weight: 750;
+  margin-bottom: 0.5rem;
 }
 
 .build-body {
-  color: var(--ink-2);
   max-width: 64ch;
-  line-height: 1.55;
-  font-size: 0.92rem;
+  line-height: 1.6;
 }
 
 .build-media {
   align-self: start;
 }
 
-/* --- What I learned: a few short bullets ------------------------------- */
+/* --- What I learned ---------------------------------------------------- */
 .learn-list {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  max-width: 72ch;
+  gap: 0.9rem;
+  max-width: 68ch;
 }
 
 .learn-list li {
   position: relative;
-  padding-left: 1.15rem;
+  padding-left: 1.3rem;
   color: var(--ink-2);
-  line-height: 1.55;
+  line-height: 1.6;
 }
 
 .learn-list li::before {
   content: "";
   position: absolute;
   left: 0;
-  top: 0.62em;
-  width: 5px;
-  height: 5px;
-  border-radius: 1px;
-  background: var(--link);
+  top: 0.78em;
+  width: 0.55rem;
+  height: 2px;
+  background: var(--accent);
 }
 
-/* --- Planned media slot (compact, labelled, intentional) --------------- */
+/* --- Planned media slot ------------------------------------------------ */
 .media-placeholder {
-  color: var(--ink-2);
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   padding: 0.9rem 1rem;
   aspect-ratio: 16 / 9;
-  border: 1px dashed var(--border-strong);
+  border: 1px dashed var(--rule-strong);
   border-radius: var(--radius);
-  background: var(--panel-alt);
-  background-image: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 9px,
-    color-mix(in srgb, currentColor 4%, transparent) 9px,
-    color-mix(in srgb, currentColor 4%, transparent) 18px
-  );
+  background: var(--surface);
 }
 
 .media-placeholder-label {
-  font-family: var(--mono);
-  font-size: 0.76rem;
+  font-size: 0.9rem;
   font-weight: 500;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  color: var(--ink-2);
+  color: var(--ink-3);
 }
 
-/* --- "Technical details" expander (shared .disclosure primitive) -------- */
+/* --- "Technical details" expander -------------------------------------- */
 .build-more {
-  margin-top: 0.85rem;
+  margin-top: 1rem;
 }
 
 .build-more .build-body + .build-body {
-  margin-top: 0.5rem;
+  margin-top: 0.6rem;
 }
 
 /* A build row carrying the component map goes full width. */
@@ -435,23 +417,26 @@
   grid-template-columns: 1fr;
 }
 
+@media (min-width: 720px) {
+  .build-row-wide {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* --- Component map: each system and the one thing it does -------------- */
 .cmap {
   display: flex;
   flex-direction: column;
-  margin-top: 0.2rem;
-  background: var(--panel);
-  border: 1px solid var(--border-strong);
+  background: var(--surface);
   border-radius: var(--radius);
-  overflow: hidden;
 }
 
 .cmap-row {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.1rem 1.1rem;
-  padding: 0.6rem 0.9rem;
-  border-top: 1px solid var(--border);
+  gap: 0.1rem 1.5rem;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--rule);
 }
 
 .cmap-row:first-child {
@@ -459,26 +444,24 @@
 }
 
 .cmap-name {
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--ink);
 }
 
 .cmap-role {
-  font-size: 0.86rem;
+  font-size: 0.94rem;
   color: var(--ink-2);
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 @media (min-width: 560px) {
   .cmap-row {
-    grid-template-columns: 160px 1fr;
+    grid-template-columns: 170px 1fr;
     align-items: baseline;
   }
 }
 
-/* --- Click-to-expand: hover affordance over an ambient clip ------------ */
+/* --- Click-to-expand over an ambient clip ------------------------------ */
 .clip-expand {
   position: absolute;
   inset: 0;
@@ -499,19 +482,22 @@
   place-items: center;
   width: 2rem;
   height: 2rem;
-  margin: 0.5rem;
+  margin: 0.6rem;
   color: #fff;
   background: rgba(0, 0, 0, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: var(--radius);
-  opacity: 0.55;
+  opacity: 0.6;
   transition: opacity 0.12s ease, background 0.12s ease;
 }
 
 .clip-expand:hover .clip-expand-icon,
 .clip-expand:focus-visible .clip-expand-icon {
   opacity: 1;
-  background: rgba(0, 0, 0, 0.72);
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.clip-expand:focus-visible {
+  outline-offset: -3px;
 }
 
 .clip-expand-icon svg {
@@ -522,17 +508,17 @@
 .lightbox {
   position: fixed;
   inset: 0;
-  z-index: 100;
+  z-index: 150;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: clamp(1rem, 4vw, 3rem);
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(8, 9, 12, 0.9);
   animation: lightbox-fade 0.14s ease-out;
 }
 
 .lightbox-inner {
-  width: min(1100px, 100%);
+  width: min(1200px, 100%);
   animation: lightbox-pop 0.14s ease-out;
 }
 

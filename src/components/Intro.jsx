@@ -10,49 +10,41 @@ export function Intro() {
 
   return (
     <section className="intro" aria-labelledby="intro-name">
-      <div className="wrap intro-inner">
-        <div className="intro-main">
-          <h1 id="intro-name">{name}</h1>
-          <p className="intro-role">{role}</p>
-          <p className="intro-text">{intro}</p>
-          <div className="intro-actions">
-            {social.github && (
-              <a className="btn" href={social.github} target="_blank" rel="noopener noreferrer">
-                GitHub
+      <div className="wrap">
+        <h1 id="intro-name" className="intro-name">{name}</h1>
+
+        <div className="intro-grid">
+          <div className="intro-main">
+            <p className="intro-role">{role}</p>
+            <p className="intro-text">{intro}</p>
+          </div>
+
+          <div className="intro-side">
+            {status && <p className="intro-status">{status}</p>}
+            {location && <p className="intro-location">{location}</p>}
+            <div className="intro-actions">
+              <a className="btn btn-primary" href={contactHref} {...contactProps}>
+                Contact
               </a>
-            )}
-            {social.linkedin && (
-              <a className="btn" href={social.linkedin} target="_blank" rel="noopener noreferrer">
-                LinkedIn
-              </a>
-            )}
-            {social.resume && (
-              <a className="btn" href={social.resume} target="_blank" rel="noopener noreferrer">
-                Résumé
-              </a>
-            )}
-            <a className="btn btn-primary" href={contactHref} {...contactProps}>
-              Contact
-            </a>
+              {/* Contact already opens LinkedIn unless an email is set. */}
+              {social.email && social.linkedin && (
+                <a className="btn" href={social.linkedin} target="_blank" rel="noopener noreferrer">
+                  LinkedIn
+                </a>
+              )}
+              {social.github && (
+                <a className="btn" href={social.github} target="_blank" rel="noopener noreferrer">
+                  GitHub
+                </a>
+              )}
+              {social.resume && (
+                <a className="btn" href={social.resume} target="_blank" rel="noopener noreferrer">
+                  Résumé
+                </a>
+              )}
+            </div>
           </div>
         </div>
-
-        <dl className="intro-facts panel">
-          {status && (
-            <>
-              <dt>Status</dt>
-              <dd>{status}</dd>
-            </>
-          )}
-          {location && (
-            <>
-              <dt>Location</dt>
-              <dd>{location}</dd>
-            </>
-          )}
-          <dt>Focus</dt>
-          <dd>Security · Backend · APIs</dd>
-        </dl>
       </div>
     </section>
   )

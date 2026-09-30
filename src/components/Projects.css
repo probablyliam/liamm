@@ -1,201 +1,122 @@
-.pc-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--gap);
-}
-
-.pc {
+.pj-list {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  gap: clamp(3.5rem, 8vw, 6rem);
 }
 
-.pc:hover {
-  border-color: var(--border-strong);
+/* Footage beside the write-up on wide screens. The preview clips are 640px
+   wide, so this keeps them close to native size instead of stretched. */
+.pj {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem 3rem;
+  align-items: start;
 }
 
-/* --- Media ------------------------------------------------------------- */
-.pc-media {
-  position: relative;
+@media (min-width: 1000px) {
+  .pj {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  }
+  .pj-media {
+    position: sticky;
+    top: calc(var(--header-h) + 1.5rem);
+  }
+}
+
+/* --- Media: the loud part of the page ---------------------------------- */
+.pj-media {
   display: block;
   aspect-ratio: 16 / 9;
-  background: var(--panel-alt);
-  border-bottom: 1px solid var(--border);
   overflow: hidden;
+  border-radius: var(--radius);
+  background: #0d0e12;
 }
 
-.pc-poster,
-.pc-preview {
+.pj-media img,
+.pj-media video {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.pc-preview {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 0.35s ease;
-}
-
-.pc-preview.is-visible {
-  opacity: 1;
-}
-
-.pc-noimg {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--mono);
-  font-size: 0.8rem;
-  color: var(--ink-3);
-  background:
-    repeating-linear-gradient(
-      45deg,
-      var(--panel-alt),
-      var(--panel-alt) 10px,
-      var(--border) 10px,
-      var(--border) 20px
-    );
-}
-
-/* --- Body -------------------------------------------------------------- */
-.pc-body {
+/* --- Body: title block, the substance, then actions ------------------- */
+.pj-body {
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
-  padding: 0.85rem 1rem 1rem;
+  gap: 1.5rem;
 }
 
-.pc-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.75rem;
+.pj-title {
+  font-size: clamp(1.6rem, 3.2vw, 2.25rem);
+  font-stretch: var(--semi-wide);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
 }
 
-.pc-title {
-  font-size: 1.1rem;
-  line-height: 1.2;
-}
-
-.pc-title a {
+.pj-title a {
   color: var(--ink);
   text-decoration: none;
 }
 
-.pc-title a:hover {
-  color: var(--link);
-  text-decoration: underline;
+.pj-title a:hover {
+  color: var(--accent);
 }
 
-.pc-headmeta {
+.pj-kind {
+  font-size: 1rem;
+  color: var(--ink-2);
+  margin-top: 0.5rem;
+}
+
+.pj-meta {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  flex: 0 0 auto;
-}
-
-.pc-year {
-  font-family: var(--mono);
-  font-size: 0.78rem;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  font-size: 0.86rem;
   color: var(--ink-3);
+  margin-top: 0.6rem;
 }
 
-.pc-kind {
-  font-family: var(--mono);
-  font-size: 0.74rem;
-  color: var(--ink-3);
-  margin-top: -0.2rem;
+.pj-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
 }
 
-.pc-summary {
-  color: var(--ink-2);
-}
-
-/* Spec rows */
-.pc-spec {
-  display: grid;
-  grid-template-columns: 110px 1fr;
-  gap: 0.35rem 0.85rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--border);
-}
-
-.pc-spec dt {
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  color: var(--ink-3);
-  padding-top: 0.1rem;
-}
-
-.pc-spec dd {
-  font-size: 0.9rem;
-  color: var(--ink-2);
-}
-
-.pc-built {
+.pj-detail {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 1.25rem;
+  max-width: 68ch;
 }
 
-.pc-built li {
+.pj-label {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 0.3rem;
+}
+
+.pj-built {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.pj-built li {
   position: relative;
-  padding-left: 1.05rem;
+  padding-left: 1.1rem;
+  color: var(--ink-2);
 }
 
-.pc-built li::before {
+.pj-built li::before {
   content: "";
   position: absolute;
   left: 0;
-  top: 0.5em;
-  width: 5px;
-  height: 5px;
-  border-radius: 1px;
-  background: var(--link);
-}
-
-/* Both cards: equal full width, media beside the body on wide screens */
-@media (min-width: 720px) {
-  .pc {
-    flex-direction: row;
-  }
-  .pc .pc-media {
-    flex: 0 0 46%;
-    aspect-ratio: auto;
-    border-bottom: none;
-    border-right: 1px solid var(--border);
-  }
-  .pc .pc-body {
-    flex: 1 1 auto;
-    padding: 1.1rem 1.25rem;
-  }
-}
-
-.pc-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-  margin-top: 0.35rem;
-}
-
-@media (max-width: 480px) {
-  .pc-spec {
-    grid-template-columns: 1fr;
-    gap: 0.1rem;
-  }
-  .pc-spec dd {
-    margin-bottom: 0.45rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pc-preview.is-visible {
-    opacity: 0;
-  }
+  top: 0.72em;
+  width: 0.45rem;
+  height: 2px;
+  background: var(--accent);
 }

@@ -14,7 +14,7 @@ export function NotFound({ title = 'Page not found', children }) {
 
   return (
     <section className="section wrap not-found">
-      <h1>{title}</h1>
+      <h1 className="section-title">{title}</h1>
       {children || <p>There is nothing at this address.</p>}
       <p>
         <Link to="/">← Back to the start</Link>

@@ -91,6 +91,7 @@ export const portfolioConfig = {
   //   preview   OPTIONAL short, muted clip that plays on hover (like YouTube).
   //             Use a small .mp4/.webm. Falls back to the cover if absent.
   //   featured  set true on ONE project to give it the big top slot.
+  //   accent    OPTIONAL { light, dark } colour used for this project's page.
   //
   //   --- detail page ---
   //   showcase  the finished result, shown FIRST. One of:
@@ -112,6 +113,8 @@ export const portfolioConfig = {
       status: "Live",
       kind: "Interactive data visualization",
       featured: false,
+      // Page accent on the detail page, taken from the project itself.
+      accent: { light: "#8a5a00", dark: "#e8b64c" },
       problem:
         "Roman succession rarely ran father to son. Emperors often adopted their heirs, and the line sometimes passed through a grandchild, so the real connections are hard to follow.",
       built: [
@@ -154,6 +157,7 @@ export const portfolioConfig = {
       status: "Unity demo",
       kind: "Unity combat & physics systems demo",
       featured: true,
+      accent: { light: "#6a32c9", dark: "#b99aff" },
       // One-line hook for the project card.
       // Shown as "Problem" on the detail page — framed as the challenge I set.
       problem:

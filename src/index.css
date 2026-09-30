@@ -1,55 +1,66 @@
 :root {
-  /* --- Utilitarian palette: neutral surfaces, one functional accent ----- */
-  --bg: #ececed;          /* page background */
-  --panel: #ffffff;       /* cards, panels */
-  --panel-alt: #f6f6f7;   /* zebra rows, sunken blocks */
-  --header-bg: #1f2937;   /* dark utility bar (toolbar) */
-  --header-ink: #e9eaec;
+  /* --- Palette: cool paper, ink, one indigo accent ---------------------- */
+  --bg: #f2f3f5;          /* page */
+  --surface: #ffffff;     /* media mats, raised blocks */
+  --ink: #14161b;         /* primary text */
+  --ink-2: #454954;       /* body text */
+  --ink-3: #6f7480;       /* meta, captions */
+  --rule: #d5d8de;        /* dividers */
+  --rule-strong: #b3b8c1;
 
-  --ink: #1a1a1a;         /* primary text */
-  --ink-2: #3f3f46;       /* secondary text */
-  --ink-3: #6b6b72;       /* muted / meta */
+  --accent: #3b2fd0;      /* links, focus, markers */
+  --accent-hover: #2a20a8;
+  --accent-ink: #ffffff;  /* text on a filled accent button */
+  --selection: #d9d6fb;
 
-  --border: #d4d4d8;
-  --border-strong: #b6b6bd;
+  /* Project status */
+  --ok: #1f7a3d;
+  --idle: #6f7480;
 
-  --link: #1a5cad;
-  --link-hover: #103e75;
-  --link-visited: #5b3a9e;
-  --link-ink: #ffffff;    /* text on a --link filled button */
-  --selection: #cfe0f7;
+  /* --- Type: one family, width does the work ---------------------------- */
+  --sans: "Archivo Variable", system-ui, -apple-system, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  --wide: 125%;           /* display: name, section heads */
+  --semi-wide: 112%;
 
-  --row-hover: #eef4fc;   /* subtle hover fill */
-
-  /* Functional status colors */
-  --ok: #2e7d32;
-  --ok-bg: #e8f3e9;
-  --wip: #a15c00;
-  --wip-bg: #fbf0dd;
-  --idle: #57575e;
-  --idle-bg: #ececee;
-
-  /* --- Type: native stacks, zero web-font requests --------------------- */
-  --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
-    "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
-  --mono: ui-monospace, SFMono-Regular, "Cascadia Code", "Consolas",
-    "Liberation Mono", monospace;
-
-  /* --- Layout ---------------------------------------------------------- */
-  --maxw: 1180px;
-  --pad: clamp(0.85rem, 3vw, 1.75rem);
-  --gap: 1rem;
-  --radius: 4px;
-  --header-h: 52px;
+  /* --- Layout ----------------------------------------------------------- */
+  --maxw: 1200px;
+  --pad: clamp(1rem, 4vw, 2.5rem);
+  --gap: 1.25rem;
+  --radius: 6px;
+  --header-h: 60px;
 
   color-scheme: light;
   font-family: var(--sans);
-  font-size: 15px;
-  line-height: 1.5;
+  font-size: 17px;
+  line-height: 1.6;
   color: var(--ink);
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
   text-size-adjust: 100%;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15161a;
+    --surface: #1c1e23;
+    --ink: #ecedf0;
+    --ink-2: #b9bcc4;
+    --ink-3: #8a8e98;
+    --rule: #2c2f36;
+    --rule-strong: #434752;
+
+    --accent: #a29bff;
+    --accent-hover: #c3beff;
+    --accent-ink: #15161a;
+    --selection: #3a3470;
+
+    --ok: #5fcb84;
+    --idle: #8a8e98;
+
+    color-scheme: dark;
+  }
 }
 
 * {
@@ -58,7 +69,6 @@
   box-sizing: border-box;
 }
 
-/* No smooth scroll — anchor jumps are instant and predictable. */
 html {
   scroll-behavior: auto;
 }
@@ -74,26 +84,9 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: var(--sans);
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.15;
   color: var(--ink);
-}
-
-h1 {
-  font-size: 1.5rem;
-}
-
-h2 {
-  font-size: 1.15rem;
-}
-
-h3 {
-  font-size: 1rem;
-}
-
-h4 {
-  font-size: 0.9rem;
 }
 
 p {
@@ -101,19 +94,20 @@ p {
 }
 
 a {
-  color: var(--link);
+  color: var(--accent);
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }
 
 a:hover {
-  color: var(--link-hover);
+  color: var(--accent-hover);
 }
 
-/* Clear, consistent keyboard focus everywhere. */
 :focus-visible {
-  outline: 2px solid var(--link);
-  outline-offset: 2px;
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
 ::selection {
@@ -131,7 +125,6 @@ ol {
   list-style: none;
 }
 
-/* Visually hidden but available to screen readers */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -144,15 +137,13 @@ ol {
   border: 0;
 }
 
-/* --- Skip link (accessibility) ---------------------------------------- */
 .skip-link {
   position: absolute;
   left: -9999px;
   top: 0;
   z-index: 200;
-  background: var(--panel);
-  color: var(--link);
-  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--accent);
   padding: 0.5rem 0.85rem;
   border-radius: var(--radius);
 }
@@ -170,73 +161,44 @@ ol {
   padding-inline: var(--pad);
 }
 
-/* A section reads like a labelled region in a directory. */
 .section {
-  padding-block: clamp(1.5rem, 4vw, 2.5rem);
-  scroll-margin-top: calc(var(--header-h) + 8px);
+  padding-block: clamp(3rem, 8vw, 6rem) 0;
+  scroll-margin-top: var(--header-h);
 }
 
-.section-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
-  border-bottom: 2px solid var(--ink);
+/* Section heading: wide, heavy, left aligned. The type is the divider. */
+.section-title {
+  font-size: clamp(1.9rem, 4.5vw, 3rem);
+  font-stretch: var(--wide);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
 }
 
-.section-head h2 {
-  font-size: 1.1rem;
-  letter-spacing: 0.01em;
-}
-
-.section-head .count {
-  font-family: var(--mono);
-  font-size: 0.8rem;
+/* Small quiet meta text (years, types, captions). Sentence case, no caps. */
+.meta {
+  font-size: 0.86rem;
   color: var(--ink-3);
 }
 
-/* --- Reusable primitives ---------------------------------------------- */
-.panel {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-}
-
-/* Mono metadata chip (tech, versions) */
-.tag {
-  display: inline-block;
-  font-family: var(--mono);
-  font-size: 0.74rem;
-  line-height: 1.4;
-  color: var(--ink-2);
-  background: var(--panel-alt);
-  border: 1px solid var(--border);
-  border-radius: 3px;
-  padding: 0.05rem 0.4rem;
-  white-space: nowrap;
-}
-
-.tag-row {
+/* Tech list: plain words in a row, no chips. */
+.tech-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  gap: 0.2rem 1rem;
+  font-size: 0.86rem;
+  color: var(--ink-3);
 }
 
-/* Status badge */
+/* Project status: a coloured dot and the word. */
 .status {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  font-family: var(--mono);
-  font-size: 0.72rem;
+  gap: 0.4rem;
+  font-size: 0.86rem;
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  padding: 0.1rem 0.45rem;
-  border-radius: 3px;
-  border: 1px solid transparent;
+  color: var(--ink-2);
   white-space: nowrap;
 }
 
@@ -245,182 +207,97 @@ ol {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: currentColor;
+  background: var(--idle);
 }
 
-.status.is-ok {
-  color: var(--ok);
-  background: var(--ok-bg);
-  border-color: color-mix(in srgb, var(--ok) 35%, transparent);
+.status.is-ok::before {
+  background: var(--ok);
 }
 
-.status.is-wip {
-  color: var(--wip);
-  background: var(--wip-bg);
-  border-color: color-mix(in srgb, var(--wip) 35%, transparent);
-}
-
-.status.is-idle {
-  color: var(--idle);
-  background: var(--idle-bg);
-  border-color: var(--border-strong);
-}
-
-/* Button-style link/action */
+/* --- Buttons ------------------------------------------------------------ */
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  font-family: var(--sans);
-  font-size: 0.85rem;
-  font-weight: 500;
+  gap: 0.4rem;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1;
   color: var(--ink);
-  background: var(--panel);
-  border: 1px solid var(--border-strong);
+  background: transparent;
+  border: 1.5px solid var(--ink);
   border-radius: var(--radius);
-  padding: 0.35rem 0.7rem;
+  padding: 0.7rem 1.05rem;
   text-decoration: none;
   cursor: pointer;
 }
 
 .btn:hover {
-  background: var(--row-hover);
-  border-color: var(--link);
-  color: var(--link-hover);
+  color: var(--accent-hover);
+  border-color: var(--accent);
 }
 
 .btn-primary {
-  background: var(--link);
-  border-color: var(--link);
-  color: var(--link-ink);
+  background: var(--ink);
+  color: var(--bg);
 }
 
 .btn-primary:hover {
-  background: var(--link-hover);
-  border-color: var(--link-hover);
-  color: var(--link-ink);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
 }
 
-/* Disclosure: a clearly tappable "more" control with depth on demand.
-   Used for technical details on project pages and highlights in Experience. */
+/* Disclosure: a quiet text toggle for depth on demand. */
 .disclosure > summary {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.4rem;
   width: fit-content;
   cursor: pointer;
   list-style: none;
   user-select: none;
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--ink-2);
-  background: var(--panel-alt);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius);
-  padding: 0.32rem 0.65rem;
-  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent);
 }
 
 .disclosure > summary::-webkit-details-marker {
   display: none;
 }
 
-/* Chevron points right when closed, rotates down when open. */
 .disclosure > summary::before {
-  content: "\203A";
-  font-size: 1rem;
-  line-height: 1;
+  content: "";
+  width: 0.45em;
+  height: 0.45em;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
   transition: transform 0.15s ease;
 }
 
 .disclosure[open] > summary::before {
-  transform: rotate(90deg);
+  transform: rotate(45deg) translate(-2px, -1px);
 }
 
-.disclosure > summary:hover,
-.disclosure > summary:focus-visible,
-.disclosure[open] > summary {
-  background: var(--row-hover);
-  border-color: var(--link);
-  color: var(--link-hover);
+.disclosure > summary:hover {
+  color: var(--accent-hover);
 }
 
-/* Revealed content reads as a nested block tied to its toggle. */
 .disclosure-body {
-  margin-top: 0.7rem;
-  padding-left: 0.85rem;
-  border-left: 2px solid var(--border-strong);
+  margin-top: 0.8rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--accent);
 }
 
-/* Key/value definition rows (spec sheet) */
-.kv {
-  display: grid;
-  grid-template-columns: 130px 1fr;
-  gap: 0.4rem 1rem;
-}
-
-.kv dt {
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  color: var(--ink-3);
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  padding-top: 0.05rem;
-}
-
-.kv dd {
-  color: var(--ink-2);
-}
-
-@media (max-width: 560px) {
-  .kv {
-    grid-template-columns: 1fr;
-    gap: 0.15rem 0;
-  }
-  .kv dd {
-    margin-bottom: 0.6rem;
-  }
-}
-
-/* --- Dark: same palette, inverted. Follows the OS setting; no toggle. -- */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #131416;
-    --panel: #1b1d20;
-    --panel-alt: #222528;
-    --header-bg: #0e1114;
-    --header-ink: #e6e7ea;
-
-    --ink: #e8e9ec;
-    --ink-2: #c3c5cb;
-    --ink-3: #8f929a;
-
-    --border: #2d3035;
-    --border-strong: #41454c;
-
-    --link: #7fabea;
-    --link-hover: #a9c6f3;
-    --link-visited: #b39ddb;
-    --link-ink: #0e1420;
-    --selection: #2b4a7a;
-
-    --row-hover: #1e2733;
-
-    --ok: #6cc47a;
-    --ok-bg: #16281a;
-    --wip: #e0a24d;
-    --wip-bg: #2d2211;
-    --idle: #a4a7ae;
-    --idle-bg: #26282c;
-
-    color-scheme: dark;
+@media (prefers-reduced-motion: reduce) {
+  .disclosure > summary::before {
+    transition: none;
   }
 }
 
 @media (max-width: 768px) {
   :root {
-    font-size: 14.5px;
+    font-size: 16px;
   }
 }

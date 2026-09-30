@@ -20,7 +20,8 @@ export function Footer() {
           {social.resume && (
             <a href={social.resume} target="_blank" rel="noopener noreferrer">Résumé</a>
           )}
-          <a href={contactHref} {...contactProps}>Contact</a>
+          {/* Without an email, Contact would just repeat the LinkedIn link. */}
+          {social.email && <a href={contactHref} {...contactProps}>Contact</a>}
         </div>
         <span className="footer-meta">
           © {new Date().getFullYear()} {name}

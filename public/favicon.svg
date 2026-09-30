@@ -1,6 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="LM">
-  <rect x="2" y="2" width="60" height="60" rx="10" fill="#1f2937" />
-  <rect x="2" y="2" width="60" height="60" rx="10" fill="none" stroke="#4a5568" stroke-width="2" />
-  <text x="50%" y="52%" text-anchor="middle" dominant-baseline="middle" fill="#e9eaec" font-size="30" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-weight="700" letter-spacing="-1">LM</text>
-  <rect x="14" y="48" width="36" height="4" rx="1" fill="#8ab4f8" />
+  <rect width="64" height="64" rx="12" fill="#14161b" />
+  <text x="32" y="36" text-anchor="middle" dominant-baseline="middle" fill="#f2f3f5" font-size="30" font-family="Archivo, Segoe UI, Helvetica, Arial, sans-serif" font-weight="800" letter-spacing="-1.5">LM</text>
+  <rect x="14" y="50" width="36" height="4" rx="1" fill="#8f86ff" />
 </svg>

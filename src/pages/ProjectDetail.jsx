@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { portfolioConfig } from '../config'
+import { statusClass, usePrefersReducedMotion, useInViewPlayback } from '../media'
 import { NotFound } from './NotFound'
 import './ProjectDetail.css'
 
@@ -11,36 +12,13 @@ const LINK_LABELS = {
   github: 'Source',
 }
 
-function statusClass(status = '') {
-  const s = status.toLowerCase()
-  if (s.includes('live') || s.includes('shipped') || s.includes('complete')) return 'is-ok'
-  if (s.includes('dev') || s.includes('progress') || s.includes('wip') || s.includes('demo')) return 'is-wip'
-  return 'is-idle'
-}
-
 // Ambient clip: muted, looping, no controls. It just plays so the viewer can
-// watch the motion. To stay cheap it loads nothing until it scrolls into view
-// (preload="none" plus an IntersectionObserver that plays/pauses on visibility),
-// and it honors reduced-motion by showing the poster with manual controls.
+// watch the motion. It loads nothing until it scrolls into view and pauses
+// once scrolled away; with reduced motion it shows the poster and controls.
 function AmbientClip({ src, poster, caption, className = '', onExpand }) {
   const ref = useRef(null)
-  const [reduce] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-
-  useEffect(() => {
-    if (reduce) return undefined
-
-    const v = ref.current
-    if (!v) return
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) v.play().catch(() => {})
-        else v.pause()
-      },
-      { threshold: 0.2 }
-    )
-    io.observe(v)
-    return () => io.disconnect()
-  }, [reduce])
+  const reduce = usePrefersReducedMotion()
+  useInViewPlayback(ref, !reduce)
 
   const frame = (
     <div className={`media-frame media-video ${caption ? '' : className}`.trim()}>
@@ -149,6 +127,44 @@ function BuildMedia({ item, onExpand }) {
   )
 }
 
+function Showcase({ showcase, onExpand }) {
+  if (!showcase) return null
+  if (showcase.type === 'video') {
+    return (
+      <AmbientClip
+        src={showcase.src}
+        poster={showcase.poster}
+        caption={showcase.caption}
+        className="hero-media"
+        onExpand={onExpand}
+      />
+    )
+  }
+  if (showcase.type === 'youtube') {
+    return (
+      <figure className="clip-fig hero-media">
+        <div className="media-frame media-video">
+          <iframe
+            src={`https://www.youtube.com/embed/${showcase.id}`}
+            title="Project video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+      </figure>
+    )
+  }
+  if (!showcase.src) return null
+  return (
+    <figure className="clip-fig hero-media">
+      <div className="media-frame">
+        <img src={showcase.src} alt={showcase.alt || ''} />
+      </div>
+      {showcase.caption && <figcaption>{showcase.caption}</figcaption>}
+    </figure>
+  )
+}
+
 export function ProjectDetail() {
   const { slug } = useParams()
   const project = portfolioConfig.projects.find((p) => p.slug === slug)
@@ -164,7 +180,7 @@ export function ProjectDetail() {
   useEffect(() => {
     if (!project) return undefined
     const prev = document.title
-    document.title = `${project.title} \u2014 ${portfolioConfig.name}`
+    document.title = `${project.title} — ${portfolioConfig.name}`
     return () => {
       document.title = prev
     }
@@ -227,77 +243,57 @@ export function ProjectDetail() {
   const showcase = project.showcase
   const tech = project.tech || []
 
+  // Each project page takes its accent from the project itself.
+  const accentStyle = project.accent
+    ? { '--p-accent-light': project.accent.light, '--p-accent-dark': project.accent.dark }
+    : undefined
+
   return (
-    <article className="detail section">
+    <article className={`detail${project.accent ? ' has-accent' : ''}`} style={accentStyle}>
       <div className="wrap">
+        <p className="detail-back">
+          <Link to="/#projects">← Projects</Link>
+        </p>
+
+        <header className="detail-head">
+          <h1 className="detail-title">{project.title}</h1>
+          <div className="detail-headrow">
+            <p className="detail-meta">
+              {project.kind && <span className="detail-kind">{project.kind}</span>}
+              {project.status && (
+                <span className={`status ${statusClass(project.status)}`}>{project.status}</span>
+              )}
+              {project.year && <span>{project.year}</span>}
+            </p>
+            {hasLinks && (
+              <div className="detail-actions">
+                {Object.entries(links).map(([key, url]) =>
+                  url ? (
+                    <a
+                      key={key}
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`btn ${key === 'live' || key === 'download' ? 'btn-primary' : ''}`}
+                    >
+                      {LINK_LABELS[key] || key}
+                    </a>
+                  ) : null
+                )}
+              </div>
+            )}
+          </div>
+        </header>
+
+        {/* HERO: the finished result, full width, before anything else */}
+        <Showcase
+          showcase={showcase}
+          onExpand={() => setLightbox({ src: showcase.src, poster: showcase.poster })}
+        />
+
         <div className={`detail-layout${showToc ? ' has-toc' : ''}`}>
           <div className="detail-main">
-            <p className="detail-back">
-              <Link to="/#projects">← Projects</Link>
-            </p>
-
-            <header className="detail-head">
-              <div className="detail-titleblock">
-                <h1>{project.title}</h1>
-                <p className="detail-meta">
-                  {project.status && (
-                    <span className={`status ${statusClass(project.status)}`}>{project.status}</span>
-                  )}
-                  {project.kind && <span className="detail-kind">{project.kind}</span>}
-                  {project.year && <span className="detail-year">{project.year}</span>}
-                </p>
-              </div>
-              {hasLinks && (
-                <div className="detail-actions">
-                  {Object.entries(links).map(([key, url]) =>
-                    url ? (
-                      <a
-                        key={key}
-                        href={url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`btn ${key === 'live' || key === 'download' ? 'btn-primary' : ''}`}
-                      >
-                        {LINK_LABELS[key] || key}
-                      </a>
-                    ) : null
-                  )}
-                </div>
-              )}
-            </header>
-
-            {/* HERO — leads with the finished result */}
-            {showcase &&
-              (showcase.type === 'video' ? (
-                <AmbientClip
-                  src={showcase.src}
-                  poster={showcase.poster}
-                  caption={showcase.caption}
-                  className="hero-media"
-                  onExpand={() => setLightbox({ src: showcase.src, poster: showcase.poster })}
-                />
-              ) : showcase.type === 'youtube' ? (
-                <figure className="clip-fig hero-media">
-                  <div className="media-frame media-video">
-                    <iframe
-                      src={`https://www.youtube.com/embed/${showcase.id}`}
-                      title="Project video"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
-                  </div>
-                </figure>
-              ) : (
-                showcase.src && (
-                  <figure className="clip-fig hero-media">
-                    <div className="media-frame">
-                      <img src={showcase.src} alt={showcase.alt || ''} />
-                    </div>
-                  </figure>
-                )
-              ))}
-
-            {/* INTRO — one sentence, a short overview, then the toolset */}
+            {/* INTRO: one sentence, a short overview, then the toolset */}
             <section id="overview" className="detail-intro">
               {tagline && <p className="detail-tagline">{tagline}</p>}
 
@@ -308,14 +304,13 @@ export function ProjectDetail() {
               {tech.length > 0 && (
                 <div className="detail-tools">
                   <span className="detail-tools-label">Built with</span>
-                  <div className="tag-row">
-                    {tech.map((t) => <span key={t} className="tag">{t}</span>)}
-                  </div>
+                  <ul className="tech-list">
+                    {tech.map((t) => <li key={t}>{t}</li>)}
+                  </ul>
                 </div>
               )}
             </section>
 
-            {/* WHAT MAKES IT INTERESTING — six scannable cards */}
             {features.length > 0 && (
               <section id="highlights" className="detail-section">
                 <h2 className="detail-h2">What makes it interesting</h2>
@@ -333,13 +328,17 @@ export function ProjectDetail() {
               </section>
             )}
 
-            {/* CUSTOM ABILITIES — the centerpiece: three colour-coded columns */}
+            {/* CUSTOM ABILITIES: three colour-coded columns */}
             {abilities.length > 0 && (
               <section id="abilities" className="detail-section">
                 <h2 className="detail-h2">Custom abilities</h2>
                 <div className="abil-grid">
                   {abilities.map((a) => (
-                    <article key={a.name} className="abil panel">
+                    <article
+                      key={a.name}
+                      className="abil"
+                      style={a.color ? { '--abil': a.color } : undefined}
+                    >
                       {a.video && (
                         <AmbientClip
                           src={a.video}
@@ -349,14 +348,7 @@ export function ProjectDetail() {
                         />
                       )}
                       <div className="abil-body">
-                        <div className="abil-head">
-                          {a.color && (
-                            <span className="abil-dot" style={{ background: a.color }} aria-hidden="true" />
-                          )}
-                          <span className="abil-name" style={a.color ? { color: a.color } : undefined}>
-                            {a.name}
-                          </span>
-                        </div>
+                        <h3 className="abil-name">{a.name}</h3>
                         {a.blurb && <p className="abil-blurb">{a.blurb}</p>}
                         <dl className="abil-kv">
                           {a.feels && (<><dt>Feels like</dt><dd>{a.feels}</dd></>)}
@@ -369,7 +361,7 @@ export function ProjectDetail() {
               </section>
             )}
 
-            {/* HOW IT WAS BUILT — main idea up top, deeper detail in an expander */}
+            {/* HOW IT WAS BUILT: main idea up top, deeper detail in an expander */}
             {build.length > 0 && (
               <section id="build" className="detail-section">
                 <h2 className="detail-h2">How it was built</h2>
@@ -419,7 +411,6 @@ export function ProjectDetail() {
               </section>
             )}
 
-            {/* WHAT I LEARNED — a few substantive bullets */}
             {takeaways.length > 0 && (
               <section id="learned" className="detail-section">
                 <h2 className="detail-h2">What I learned</h2>

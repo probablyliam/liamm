@@ -22,8 +22,8 @@ export function Home() {
     <>
       <Intro />
       <Projects />
-      <Skills />
       <Experience />
+      <Skills />
     </>
   )
 }

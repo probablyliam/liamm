@@ -23,6 +23,7 @@ src/
 │   └── NotFound.jsx       # any unknown URL
 ├── components/            # Nav, Intro, Projects, Skills, Experience, Footer
 ├── index.css             # design tokens (light + dark), shared primitives
+├── media.js              # status + in-view video playback helpers
 └── App.jsx               # routing
 ```
 

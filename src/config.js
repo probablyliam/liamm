@@ -25,6 +25,7 @@ export const portfolioConfig = {
 
   // --- Projects -------------------------------------------------------------
   // Every project gets its own shareable page at /projects/<slug>.
+  // They are shown in the order they are listed here.
   //
   //   --- card ---
   //   title, year, status   status is a short label, e.g. "Live" or "Unity demo"
@@ -34,7 +35,6 @@ export const portfolioConfig = {
   //   tech      tech tags
   //   cover     freeze-frame image for the card (path in /public)
   //   preview   OPTIONAL short muted clip that loops on the card
-  //   featured  set true on ONE project to give it the big top slot
   //   accent    OPTIONAL { light, dark } colour for this project's page
   //
   //   --- detail page ---
@@ -48,46 +48,111 @@ export const portfolioConfig = {
   //   links        any of: live, github (empty to hide)
   projects: [
     {
-      id: 1,
-      slug: "imperial-lineage",
-      title: "Imperial Lineage",
+      id: 3,
+      slug: "pq-oidc",
+      title: "Quantum-Safe Login Scanner",
       year: "2026",
       status: "Live",
-      kind: "Interactive data visualization",
-      featured: false,
-      // Page accent on the detail page, taken from the project itself.
-      accent: { light: "#8a5a00", dark: "#e8b64c" },
+      kind: "TLS and sign-in security tool",
+      // Page accent on the detail page: the green the app uses for "quantum-safe".
+      accent: { light: "#0e6b4e", dark: "#5fcfa6" },
       problem:
-        "Roman succession rarely ran father to son. Emperors often adopted their heirs, and the line sometimes passed through a grandchild, so the real connections are hard to follow.",
+        "A large enough quantum computer would break the public-key cryptography that most logins rely on. A site can move to post-quantum algorithms one piece at a time, and from the outside it is hard to tell which pieces it has moved.",
       built: [
-        "Modeled every emperor and the exact relationship on each link (born, adopted, or succession).",
-        "Rendered the full network as a pannable, zoomable graph with search, a legend, and one-click navigation between relatives.",
-        "Wrote a custom chronological layout so nodes and edges never overlap, with a detail panel for each ruler's reign, family, and sources.",
+        "A scanner with its own TLS 1.3 client that completes the handshake, including the hybrid ML-KEM groups, and reports what the server actually negotiated.",
+        "Checks on the certificate and on the sign-in keys a provider publishes, shown as one verdict with the evidence underneath.",
+        "A login lab that runs a real key exchange and real signatures in the browser, then lets you attack them with an ordinary or a quantum computer.",
+        "Strict rules on which addresses the scanner will connect to, since anyone can type one in.",
       ],
-      cover: "/imperial-lineage.jpg",
-      preview: "/imperial/preview.mp4", // short, muted hover clip
-      // The one-sentence "what is this", shown directly under the hero.
-      tagline:
-        "A visual, node-based map of Roman imperial succession, showing who descended from whom, who was adopted, and where the line passed by adoption instead of birth.",
+      // --- MEDIA -------------------------------------------------------------
+      // Assets live in /public/pq/. The clips are screen recordings of the
+      // live site, each with a .jpg poster.
+      cover: "/pq/cover.jpg",
+      preview: "/pq/preview.mp4", // short, muted loop on the card
       showcase: {
-        src: "/imperial/imperial.mp4",
-        poster: "/imperial/imperial.jpg",
-        caption: "Searching for emperors and following family links in the live graph.",
+        src: "/pq/hero.mp4",
+        poster: "/pq/hero.jpg",
+        caption: "Scanning a real sign-in service, then trying the same setup against an attacker in the login lab.",
       },
+      tagline:
+        "A scanner that checks whether a site's login is protected against quantum computers, and a lab that shows what an attacker could do where it is not.",
       description:
-        "I've always been interested in the Roman empire, and especially the tangled connections between generations. An emperor's grandchild might have a child who eventually takes the throne, or an emperor might adopt a suitable heir instead of a trueborn son. I built a node-based view of the whole succession so I could actually see those threads. The whole tree is on screen from the start: select anyone to see their portrait, birth, death, and reign, search for a name to jump to them, and follow parents, children, and successors straight from the detail panel.",
+        "I work in cryptography, and I wanted a way to see how far a real site has moved to post-quantum algorithms. So I built a scanner that answers three questions about a login. If someone records the connection, can they read it later? Can someone pretend to be the site? Can someone fake a sign-in? Each answer comes from what the server sends and publishes, and the technical details are there for anyone who wants to check the work. The project started as an OpenID Connect provider that signs its tokens with ML-DSA, which is why the repo is called pq-oidc. That provider is still in the repo, and the scanner can scan it.",
       features: [
-        "Select any individual to see their portrait, birth, death, and reign",
-        "Search for any emperor or relative and the graph centres on them",
-        "Move between predecessors, successors, parents, and children from the detail panel",
-        "See how each link was made: born to them, adopted, or a succession that skipped the bloodline",
-        "Pan and zoom the full network, or hide relatives to see the bare succession chain",
-        "A custom chronological layout keeps the graph readable, with no overlapping nodes or edges",
+        { title: "Its own TLS client", detail: "Builds the ClientHello and decrypts the server's reply itself, so it sees exactly which group was negotiated, hybrid ones included." },
+        { title: "Hybrid and post-quantum groups", detail: "X25519MLKEM768, the P-256 and P-384 hybrids, and ML-KEM on its own, each tested with a separate handshake." },
+        { title: "A verdict, then the evidence", detail: "Three plain answers first. Every finding below is marked observed, inferred, or could not determine." },
+        { title: "Reads the sign-in keys", detail: "Fetches the keys an OpenID Connect provider publishes, so the sign-in answer is not a guess." },
+        { title: "Safe to point anywhere", detail: "Private, loopback, and cloud metadata addresses are refused, along with the usual ways around that." },
+        { title: "Real cryptography in the lab", detail: "ML-KEM, ML-DSA, X25519, and ECDSA all run in the browser. Only the quantum computer is simulated." },
       ],
-      tech: ["React", "TypeScript", "Vite", "Cytoscape.js", "Node.js"],
+      build: [
+        {
+          title: "The scanner",
+          body: "The scanner does not use a TLS library to connect. It builds its own ClientHello, completes the key exchange, and decrypts the server's side of the handshake so it can read the certificate and check the signature. When it says a server uses X25519MLKEM768, it means the scanner and the server derived the same secret with it.",
+          details: [
+            "The key schedule is tested against the RFC 8448 trace, and full handshakes are tested against local OpenSSL 3.5 servers in every supported group, with the Finished message verified.",
+            "To find out which groups a server supports, the scanner sends one handshake per group and watches for a HelloRetryRequest. TLS 1.2 ECDHE and RSA key transport are recognised too.",
+            "It only observes. Nothing is sent after the ClientHello, and it never signs in to anything.",
+            "The hosted version runs inside a single Vercel Function. A scan runs in the request, streams its progress back, and is not stored. The same code also runs as a separate API and worker with Docker Compose or a Helm chart.",
+          ],
+          components: [
+            { name: "Address policy", role: "Resolves each name once, checks the address, and pins the connection to it." },
+            { name: "TLS observer", role: "One handshake per group, decrypted and verified." },
+            { name: "Certificates", role: "Reads the chain the server sent and the signature it made in the handshake." },
+            { name: "Sign-in keys", role: "Fetches the OpenID Connect metadata and the published key set." },
+            { name: "Assessment", role: "Turns the findings into three answers and one verdict. There is no score." },
+          ],
+        },
+        {
+          title: "Login lab",
+          body: "The lab lets you choose what a site uses for its key exchange, its certificate, and its sign-in token, then log in with a password you make up. After that you play the attacker. With an ordinary computer every attempt fails. With a quantum computer the classical parts fall one at a time, and each step of the attack is shown.",
+          details: [
+            "Every value is computed in the browser as you log in: X25519 and ML-KEM-768, the TLS 1.3 key schedule, AES-256-GCM, and ECDSA P-256 and ML-DSA-65 signatures. The key schedule is the same code the scanner uses on real handshakes.",
+            "The quantum computer is simulated by handing the attacker the private key it would compute. Everything the attacker does with it afterwards is a real decryption or a real signature check, and it either works or it does not.",
+            "The handshake in the lab is a simplified sketch of TLS 1.3, not an implementation of it.",
+          ],
+          media: { src: "/pq/lab.mp4", poster: "/pq/lab.jpg" },
+        },
+        {
+          title: "Token checker",
+          body: "Paste a JWT and it says whether a quantum computer could forge tokens like it. The token is read in the browser and never sent anywhere. It also recognises the classic attacks, such as a removed signature, edited claims, and algorithm confusion.",
+          details: [
+            "The signature can be checked against the issuer's published keys.",
+            "The examples cover a typical RS256 token, a post-quantum one signed with ML-DSA-65, an encrypted one, and the tampered kinds.",
+          ],
+          media: { src: "/pq/token.mp4", poster: "/pq/token.jpg" },
+        },
+        {
+          title: "Scanning addresses from strangers",
+          body: "The scanner connects to whatever address a visitor types in, so the part that decides where it may connect got the most care. It only uses HTTPS on two ports. Every name is resolved once, the address is checked against the private, loopback, link-local, and metadata ranges, and the connection is pinned to that address. Redirects and discovered links go through the same checks.",
+          details: [
+            "IPv6 forms that carry an IPv4 address (IPv4-mapped, NAT64, and 6to4) are judged by the address inside them.",
+            "The tests cover the usual bypasses: decimal and octal IPs, localhost variants, DNS rebinding, and redirects to the cloud metadata service.",
+            "There are no accounts. Limits per visitor and per scanned site stand in for them, and everything has a size cap and a deadline.",
+          ],
+        },
+      ],
+      takeaways: [
+        "The cost of post-quantum signatures is size, not speed. An ML-DSA-65 signature is 3,309 bytes, so the same ID token grew 8.8 times and no longer fit in a cookie. Browsers drop a cookie that large without any error.",
+        "Key exchange is easier to move than signatures. A server can offer a hybrid ML-KEM group and fall back to the old one for clients that do not support it. A new signing key has to be understood by every app that checks it.",
+        "The order of a migration matters. Switching an app to ML-DSA before its library supports it breaks every sign-in, so the new key has to be published next to the old one first and apps moved over one at a time.",
+      ],
+      tech: [
+        "TypeScript",
+        "Node.js",
+        "React",
+        "Vite",
+        "TLS 1.3",
+        "ML-KEM / ML-DSA",
+        "OpenID Connect",
+        "Vitest",
+        "Docker",
+        "Vercel",
+      ],
       links: {
-        live: "https://imperial-lineage.vercel.app/",
-        github: "https://github.com/probablyliam/emperor-project",
+        live: "https://pq-oidc.vercel.app/",
+        github: "https://github.com/probablyliam/pq-oidc",
       },
     },
     {
@@ -97,7 +162,6 @@ export const portfolioConfig = {
       year: "2026",
       status: "Unity demo",
       kind: "Unity combat & physics systems demo",
-      featured: true,
       accent: { light: "#6a32c9", dark: "#b99aff" },
       // One-line hook for the project card.
       // Shown as "Problem" on the detail page — framed as the challenge I set.
@@ -236,6 +300,48 @@ export const portfolioConfig = {
         github: "https://github.com/probablyliam/JJKDemo",
       },
     },
+    {
+      id: 1,
+      slug: "imperial-lineage",
+      title: "Imperial Lineage",
+      year: "2026",
+      status: "Live",
+      kind: "Interactive data visualization",
+      // Page accent on the detail page, taken from the project itself.
+      accent: { light: "#8a5a00", dark: "#e8b64c" },
+      problem:
+        "Roman succession rarely ran father to son. Emperors often adopted their heirs, and the line sometimes passed through a grandchild, so the real connections are hard to follow.",
+      built: [
+        "Modeled every emperor and the exact relationship on each link (born, adopted, or succession).",
+        "Rendered the full network as a pannable, zoomable graph with search, a legend, and one-click navigation between relatives.",
+        "Wrote a custom chronological layout so nodes and edges never overlap, with a detail panel for each ruler's reign, family, and sources.",
+      ],
+      cover: "/imperial-lineage.jpg",
+      preview: "/imperial/preview.mp4", // short, muted hover clip
+      // The one-sentence "what is this", shown directly under the hero.
+      tagline:
+        "A visual, node-based map of Roman imperial succession, showing who descended from whom, who was adopted, and where the line passed by adoption instead of birth.",
+      showcase: {
+        src: "/imperial/imperial.mp4",
+        poster: "/imperial/imperial.jpg",
+        caption: "Searching for emperors and following family links in the live graph.",
+      },
+      description:
+        "I've always been interested in the Roman empire, and especially the tangled connections between generations. An emperor's grandchild might have a child who eventually takes the throne, or an emperor might adopt a suitable heir instead of a trueborn son. I built a node-based view of the whole succession so I could actually see those threads. The whole tree is on screen from the start: select anyone to see their portrait, birth, death, and reign, search for a name to jump to them, and follow parents, children, and successors straight from the detail panel.",
+      features: [
+        "Select any individual to see their portrait, birth, death, and reign",
+        "Search for any emperor or relative and the graph centres on them",
+        "Move between predecessors, successors, parents, and children from the detail panel",
+        "See how each link was made: born to them, adopted, or a succession that skipped the bloodline",
+        "Pan and zoom the full network, or hide relatives to see the bare succession chain",
+        "A custom chronological layout keeps the graph readable, with no overlapping nodes or edges",
+      ],
+      tech: ["React", "TypeScript", "Vite", "Cytoscape.js", "Node.js"],
+      links: {
+        live: "https://imperial-lineage.vercel.app/",
+        github: "https://github.com/probablyliam/emperor-project",
+      },
+    },
   ],
 
   // --- Experience -----------------------------------------------------------
@@ -303,71 +409,64 @@ export const portfolioConfig = {
 
   // --- Skills ---------------------------------------------------------------
   // One-line focus statement, then grouped lists for fast scanning.
-  // Each item can be a plain string, or { name, pro } — set `pro: true` to mark
-  // something you've used in a professional/production setting. The point isn't
-  // to rank yourself; it's to separate "shipped with this at work" from
-  // "comfortable with this" without making anything look like a weakness.
-  // A group can also carry a `note` — a short line rendered under its chips
-  // (used for the AI tools, so we don't pad the list with every assistant).
+  // Only list concrete technologies. A group can also carry a `note`, a short
+  // line rendered under its items.
   skillsFocus:
     "Backend and security engineering: production APIs, data, and infrastructure, with a focus on cryptography and PKI. I also build AI-integrated tooling with agents and MCP.",
   skills: [
     {
       group: "Languages",
       items: [
-        { name: "Python", pro: true },
-        { name: "C#", pro: true },
-        { name: "JavaScript", pro: true },
-        { name: "TypeScript" },
-        { name: "PowerShell", pro: true },
-        { name: "C / C++" },
-        { name: "Java" },
+        "Python",
+        "C#",
+        "JavaScript",
+        "TypeScript",
+        "PowerShell",
+        "C / C++",
+        "Java",
       ],
     },
     {
       group: "Web & APIs",
       items: [
-        { name: "Django", pro: true },
-        { name: "Flask", pro: true },
-        { name: "Express.js", pro: true },
-        { name: "Gunicorn", pro: true },
-        { name: "REST APIs", pro: true },
-        { name: "React" },
-        { name: "Node.js" },
+        "Django",
+        "Flask",
+        "Express.js",
+        "Gunicorn",
+        "React",
+        "Node.js",
       ],
     },
     {
       group: "Data & infrastructure",
       items: [
-        { name: "SQL", pro: true },
-        { name: "Data analysis & metrics", pro: true },
-        { name: "Linux", pro: true },
-        { name: "Docker", pro: true },
-        { name: "GitHub Actions", pro: true },
-        { name: "Ansible", pro: true },
-        { name: "Nginx", pro: true },
-        { name: "AWS", pro: true },
-        { name: "Azure", pro: true },
-        { name: "Git", pro: true },
-        { name: "MongoDB" },
+        "SQL",
+        "Linux",
+        "Docker",
+        "GitHub Actions",
+        "Ansible",
+        "Nginx",
+        "Git",
       ],
     },
     {
       group: "Security",
       items: [
-        { name: "Cryptography & key management", pro: true },
-        { name: "PKI / certificate management", pro: true },
-        { name: "Application security", pro: true },
-        { name: "Active Directory", pro: true },
-        { name: "LDAP", pro: true },
+        "Cryptography & key management",
+        "PKI / certificate management",
+        "TLS",
+        "Post-quantum cryptography (ML-KEM, ML-DSA)",
+        "OpenID Connect",
+        "Active Directory",
+        "LDAP",
       ],
     },
     {
       group: "AI-assisted development",
       items: [
-        { name: "MCP server & tool development", pro: true },
-        { name: "LLM agent integration", pro: true },
-        { name: "FastMCP", pro: true },
+        "MCP server & tool development",
+        "LLM agent integration",
+        "FastMCP",
       ],
     },
   ],

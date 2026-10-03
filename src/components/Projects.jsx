@@ -115,15 +115,12 @@ export function Projects() {
   const { projects } = portfolioConfig
   if (!projects || projects.length === 0) return null
 
-  const featured = projects.find((p) => p.featured)
-  const ordered = featured ? [featured, ...projects.filter((p) => p !== featured)] : projects
-
   return (
     <section id="projects" className="section">
       <div className="wrap">
         <h2 className="section-title">Projects</h2>
         <div className="pj-list">
-          {ordered.map((p) => (
+          {projects.map((p) => (
             <ProjectRow key={p.id} project={p} />
           ))}
         </div>

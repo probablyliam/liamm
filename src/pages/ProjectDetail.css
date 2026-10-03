@@ -135,6 +135,8 @@
   border-radius: var(--radius);
   overflow: hidden;
   background: #0d0e12;
+  /* A hairline so light footage still has an edge on the light page. */
+  border: 1px solid var(--rule);
 }
 
 .media-frame video {

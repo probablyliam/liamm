@@ -30,6 +30,8 @@
   overflow: hidden;
   border-radius: var(--radius);
   background: #0d0e12;
+  /* A hairline so light footage still has an edge on the light page. */
+  border: 1px solid var(--rule);
 }
 
 .pj-media img,

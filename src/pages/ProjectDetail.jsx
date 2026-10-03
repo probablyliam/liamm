@@ -327,7 +327,9 @@ export function ProjectDetail() {
                 <h2 className="detail-h2">How it was built</h2>
                 <div className="build-list">
                   {build.map((b, i) => {
-                    const wide = !!b.components
+                    // A row with a component map, or with no media at all,
+                    // takes the full width instead of leaving a column empty.
+                    const wide = !!b.components || !b.media
                     return (
                       <div key={i} className={`build-row${wide ? ' build-row-wide' : ''}`}>
                         <div className="build-text">

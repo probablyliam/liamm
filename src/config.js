@@ -81,7 +81,7 @@ export const portfolioConfig = {
       features: [
         { title: "Its own TLS client", detail: "Builds the ClientHello and decrypts the server's reply itself, so it sees exactly which group was negotiated, hybrid ones included." },
         { title: "Hybrid and post-quantum groups", detail: "X25519MLKEM768, the P-256 and P-384 hybrids, and ML-KEM on its own, each tested with a separate handshake." },
-        { title: "A verdict, then the evidence", detail: "Three plain answers first. Every finding below is marked observed, inferred, or could not determine." },
+        { title: "A verdict, then the evidence", detail: "Three plain answers first. Every finding below is marked observed, inferred, or could not determine, and a timeout or an unknown algorithm is never turned into an answer." },
         { title: "Reads the sign-in keys", detail: "Fetches the keys an OpenID Connect provider publishes, so the sign-in answer is not a guess." },
         { title: "Safe to point anywhere", detail: "Private, loopback, and cloud metadata addresses are refused, along with the usual ways around that." },
         { title: "Real cryptography in the lab", detail: "ML-KEM, ML-DSA, X25519, and ECDSA all run in the browser. Only the quantum computer is simulated." },
@@ -93,12 +93,13 @@ export const portfolioConfig = {
           details: [
             "The key schedule is tested against the RFC 8448 trace, and full handshakes are tested against local OpenSSL 3.5 servers in every supported group, with the Finished message verified.",
             "To find out which groups a server supports, the scanner sends one handshake per group and watches for a HelloRetryRequest. TLS 1.2 ECDHE and RSA key transport are recognised too.",
-            "It only observes. Nothing is sent after the ClientHello, and it never signs in to anything.",
+            "Each handshake changes one thing, so an answer can be traced to it. A server with a post-quantum certificate is asked again with only the key exchange changed, and again with only the signatures changed, because a refusal on its own does not say which part was refused.",
+            "Its handshakes only observe: nothing is sent after the ClientHello. It reads the page and the published keys the way any visitor would, and it never signs in to anything.",
             "The hosted version runs inside a single Vercel Function. A scan runs in the request, streams its progress back, and is not stored. The same code also runs as a separate API and worker with Docker Compose or a Helm chart.",
           ],
           components: [
             { name: "Address policy", role: "Resolves each name once, checks the address, and pins the connection to it." },
-            { name: "TLS observer", role: "One handshake per group, decrypted and verified." },
+            { name: "TLS observer", role: "A set of handshakes that each change one thing, decrypted and verified." },
             { name: "Certificates", role: "Reads the chain the server sent and the signature it made in the handshake." },
             { name: "Sign-in keys", role: "Fetches the OpenID Connect metadata and the published key set." },
             { name: "Assessment", role: "Turns the findings into three answers and one verdict. There is no score." },
@@ -137,6 +138,7 @@ export const portfolioConfig = {
         "The cost of post-quantum signatures is size, not speed. An ML-DSA-65 signature is 3,309 bytes, so the same ID token grew 8.8 times and no longer fit in a cookie. Browsers drop a cookie that large without any error.",
         "Key exchange is easier to move than signatures. A server can offer a hybrid ML-KEM group and fall back to the old one for clients that do not support it. A new signing key has to be understood by every app that checks it.",
         "The order of a migration matters. Switching an app to ML-DSA before its library supports it breaks every sign-in, so the new key has to be published next to the old one first and apps moved over one at a time.",
+        "A new certificate does not finish the job. While browsers still accept the old kind of certificate for a site, an attacker with a quantum computer could forge one of those, whatever certificate the server presents. So the scanner reports what a browser is actually given, and says that what browsers accept is something it cannot see.",
       ],
       tech: [
         "TypeScript",
